@@ -11,7 +11,6 @@ function App() {
                     <h1>Notes <span className="badge badge-secondary">v0.0.1</span></h1>
                 </div>
                 <div className="col-6 col-sm-6">
-                  <h1>Hello</h1>
                 </div>
             </div>
           </div>
