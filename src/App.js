@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import Header from './components/Header';
 import './App.css';
 import './styles/style.css';
 
@@ -8,7 +9,7 @@ function App() {
     const [lastSelectedDay, setLastSelectedDay] = useState(null);
     const [lastTimePicked, setLastTimePicked] = useState(null);
 
-    const addNote = (btn) => {
+    const addNote = btn => {
         let card = btn.closest('.card');
         console.log('this is before saving ');
         console.log(card);
@@ -101,18 +102,7 @@ function App() {
 
     return (
         <div>
-            <header className='jumbotron'>
-                <div className='container'>
-                    <div className='row row-header'>
-                        <div className='col-6 col-sm-6'>
-                            <h1>
-                                Notes <span className='badge badge-secondary'>v0.0.1</span>
-                            </h1>
-                        </div>
-                        <div className='col-6 col-sm-6'></div>
-                    </div>
-                </div>
-            </header>
+            <Header title='Notes' version='v0.0.1' />
 
             <div id='arrow-container' className='container'>
                 <div className='row'>
