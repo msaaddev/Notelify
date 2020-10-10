@@ -3,8 +3,15 @@ import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/picker
 import DateFnsUtils from '@date-io/date-fns';
 
 import leftNotesData from './data/startingNotesLeft';
+import middleNotesData from './data/startingNotesMiddle';
+import rightNotesData from './data/startingNotesRight';
+
 import Header from './components/Header';
+
+import CardHeader from './components/CardHeader';
 import CardBody from './components/CardBody';
+import CardFooter from './components/CardFooter';
+
 import './App.css';
 import './styles/style.css';
 
@@ -101,6 +108,8 @@ function App() {
 
 
     const [startingNotesLeft] = useState(leftNotesData);
+    const [startingNotesMiddle] = useState(middleNotesData);
+    const [startingNotesRight] = useState(rightNotesData);
     
     return (
         <div>
@@ -133,124 +142,40 @@ function App() {
                 <div className='row'>
                     <div className='col-sm-4'>
                         <div className='card'>
-                            <div className='card-header'>
-                                <div className='row'>
-                                    <div className='col-sm-6'>
-                                        <h4>
-                                            7th October
-                                            <p className='text-muted'>Wednesday</p>
-                                        </h4>
-                                    </div>
-
-                                    <div className='col-sm-6'>
-                                        <span className='badge badge-pill badge-danger'>
-                                            Yesterday
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                            <CardHeader 
+                                monthDay='7th October' 
+                                weekDay='Wednesday' 
+                                relativeDay='Yesterday' 
+                                badgeType='badge-danger'
+                            />
                             <CardBody notes={startingNotesLeft}/>
-                            <div className='card-footer text-muted'>
-                                <button
-                                    type='button'
-                                    className='add-note btn btn-lg btn-block btn-light'
-                                >
-                                    Add a note
-                                </button>
-                            </div>
+                            <CardFooter/>
                         </div>
                     </div>
 
                     <div className='col-sm-4'>
                         <div className='card'>
-                            <div className='card-header'>
-                                <div className='row'>
-                                    <div className='col-sm-6'>
-                                        <h4>
-                                            8th October
-                                            <p className='text-muted'>Thursday</p>
-                                        </h4>
-                                    </div>
-
-                                    <div className='col-sm-6'>
-                                        <span className='badge badge-pill badge-success'>
-                                            Today
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='card-body'>
-                                <ul className='list-group list-group-flush'>
-                                    <span className='badge badge-pill badge-warning'>Deadline</span>
-                                    <li className='list-group-item'>Java Test on Maven</li>
-
-                                    <span className='badge badge-light'>15:00</span>
-                                    <li className='list-group-item'>Gym</li>
-
-                                    <span className='badge badge-pill badge-info'>
-                                        Links or References
-                                    </span>
-                                    <li className='list-group-item'>
-                                        The hitchhiker's guide to the galaxy
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className='card-footer text-muted'>
-                                <button
-                                    type='button'
-                                    className='add-note btn btn-lg btn-block btn-light'
-                                >
-                                    Add a note
-                                </button>
-                            </div>
+                            <CardHeader 
+                                monthDay='8th October' 
+                                weekDay='Thursday' 
+                                relativeDay='Today' 
+                                badgeType='badge-warning'
+                            />
+                            <CardBody notes={startingNotesMiddle}/>
+                            <CardFooter/>
                         </div>
                     </div>
 
                     <div className='col-sm-4'>
                         <div className='card'>
-                            <div className='card-header'>
-                                <div className='row'>
-                                    <div className='col-sm-6'>
-                                        <h4>
-                                            9th October
-                                            <p className='text-muted'>Friday</p>
-                                        </h4>
-                                    </div>
-
-                                    <div className='col-sm-6'>
-                                        <span className='badge badge-pill badge-primary'>
-                                            Tomorrow
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='card-body'>
-                                <ul className='list-group list-group-flush'>
-                                    <span className='badge badge-pill badge-warning'>Deadline</span>
-                                    <li className='list-group-item'>Economics homework</li>
-
-                                    <span className='badge badge-light'>18:00</span>
-                                    <li className='list-group-item'>
-                                        Call my team to discuss project
-                                    </li>
-
-                                    <span className='badge badge-pill badge-info'>
-                                        Links or References
-                                    </span>
-                                    <li className='list-group-item'>
-                                        Introduction to Algorithms, CLRS
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className='card-footer text-muted'>
-                                <button
-                                    type='button'
-                                    className='add-note btn btn-lg btn-block btn-light'
-                                >
-                                    Add a note
-                                </button>
-                            </div>
+                            <CardHeader 
+                                monthDay='9th October' 
+                                weekDay='Friday' 
+                                relativeDay='Tomorrow' 
+                                badgeType='badge-primary'
+                            />
+                            <CardBody notes={startingNotesRight}/>
+                            <CardFooter/>
                         </div>
                     </div>
                 </div>
