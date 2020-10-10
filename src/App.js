@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+
+import leftNotesData from './data/startingNotesLeft';
 import Header from './components/Header';
+import CardBody from './components/CardBody';
 import './App.css';
 import './styles/style.css';
 
@@ -96,6 +99,9 @@ function App() {
 
     document.addEventListener('DOMContentLoaded', init);
 
+
+    const [startingNotesLeft] = useState(leftNotesData);
+    
     return (
         <div>
             <Header title='Notes' version='v0.0.1' />
@@ -143,17 +149,7 @@ function App() {
                                     </div>
                                 </div>
                             </div>
-                            <div className='card-body'>
-                                <ul className='list-group list-group-flush'>
-                                    <span className='badge badge-pill badge-warning'>Deadline</span>
-                                    <li className='list-group-item'>Calculus homework</li>
-
-                                    <span className='badge badge-light'>16:30</span>
-                                    <li className='list-group-item'>
-                                        Meet Alice at Hard Rock Cafe
-                                    </li>
-                                </ul>
-                            </div>
+                            <CardBody notes={startingNotesLeft}/>
                             <div className='card-footer text-muted'>
                                 <button
                                     type='button'
