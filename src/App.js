@@ -201,6 +201,7 @@ function App() {
                             <input className="form-check-input" type="radio" name="badge-radio" id="badge-time">
                             </input>
                             <label className="form-check-label badge-radio" htmlFor="badge-time">
+                                <span className='badge badge-pill badge-light'>HH:MM</span>
                                 Select custom time:
                             </label>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -234,23 +235,23 @@ const createBadgeFromRadioButtons = () => {
     let span = document.createElement('span');
 
     span.innerHTML = "Deadline";
-    let className = ['badge', 'badge-pill'];
+    let classNames = ['badge', 'badge-pill'];
     let [deadline, link, time] = ['deadline', 'link', 'time'].map(
         num => document.querySelector("#badge-" + num)
     );
 
     if (deadline.checked) {
         span.innerHTML = "Deadline";
-        className.push('badge-warning');
+        classNames.push('badge-warning');
     } else if (link.checked) {
         span.innerHTML = "Link or reference";
-        className.push('badge-info');
+        classNames.push('badge-info');
     } else { // time.checked
         span.innerHTML = lastTimePicked;
-        className.push('badge-light');
+        classNames.push('badge-light');
     }
 
-    span.className = className.join(' ');
+    span.className = classNames.join(' ');
     return span;
 }
 
@@ -275,7 +276,7 @@ const submitNote = () => {
 const bubbleUpEditor = () => {
     let editor = document.querySelector(".note-editor");
     let offset = document.querySelector("#days-container").offsetHeight +
-        document.querySelector("#arrow-container").offsetHeight;
+                 document.querySelector("#arrow-container").offsetHeight;
 
     editor.style.top = "-" + offset + "px";
 }
