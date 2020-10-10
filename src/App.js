@@ -1,5 +1,9 @@
 import React from 'react';
+import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 import './App.css';
+
+import './styles/style.css';
 
 function App() {
     return (
@@ -25,12 +29,12 @@ function App() {
                                 width='1em'
                                 height='1em'
                                 viewBox='0 0 16 16'
-                                classNameName='bi bi-chevron-compact-down'
+                                className='bi bi-chevron-compact-down'
                                 fill='currentColor'
                                 xmlns='http://www.w3.org/2000/svg'
                             >
                                 <path
-                                    fill-rule='evenodd'
+                                    fillRule='evenodd'
                                     d='M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z'
                                 ></path>
                             </svg>
@@ -178,8 +182,33 @@ function App() {
             <div className='note-editor container'>
                 <div className='row'>
                     <div className='col-sm-12'>
-                        <div className='form-group'>
-                            <label for='note-content'>Note content</label>
+
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name="badge-radio" id="badge-deadline" defaultChecked>
+                            </input>
+                            <label className="form-check-label badge-radio" htmlFor="badge-deadline">
+                                <span className='badge badge-pill badge-warning'>Deadline</span>
+                            </label>
+                        </div>
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name="badge-radio" id="badge-link">
+                            </input>
+                            <label className="form-check-label badge-radio" htmlFor="badge-link">
+                                <span className='badge badge-pill badge-info'>Link or reference</span>
+                            </label>
+                        </div>
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name="badge-radio" id="badge-time">
+                            </input>
+                            <label className="form-check-label badge-radio" htmlFor="badge-time">
+                                Select custom time:
+                            </label>
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <KeyboardTimePicker onChange={timePickerChange}/>
+                            </MuiPickersUtilsProvider>
+                        </div>
+                        <div className='form-group note-content-input'>
+                            <label htmlFor='note-content'>Note content</label>
                             <input id='note-content' className='form-control' />
                         </div>
                         <button className='submit-note btn btn-primary'>Submit</button>
@@ -191,5 +220,92 @@ function App() {
         </div>
     );
 }
+
+let lastSelectedDay = null;
+let lastTimePicked = null;
+
+const addNote = (btn) => {
+    let card = btn.closest(".card");
+    lastSelectedDay = card;
+    bubbleUpEditor();
+}
+
+const createBadgeFromRadioButtons = () => {
+    let span = document.createElement('span');
+
+    span.innerHTML = "Deadline";
+    let className = ['badge', 'badge-pill'];
+    let [deadline, link, time] = ['deadline', 'link', 'time'].map(
+        num => document.querySelector("#badge-" + num)
+    );
+
+    if (deadline.checked) {
+        span.innerHTML = "Deadline";
+        className.push('badge-warning');
+    } else if (link.checked) {
+        span.innerHTML = "Link or reference";
+        className.push('badge-info');
+    } else { // time.checked
+        span.innerHTML = lastTimePicked;
+        className.push('badge-light');
+    }
+
+    span.className = className.join(' ');
+    return span;
+}
+
+const submitNote = () => {
+    let noteContent = document.querySelector("#note-content").value;
+
+    let span = createBadgeFromRadioButtons();
+
+    let li = document.createElement('li');
+    li.innerHTML = noteContent;
+    li.className = "list-group-item";
+
+    let card = lastSelectedDay;
+    let list = card.querySelector(".list-group");
+
+    list.insertBefore(li, list.firstElementChild);
+    list.insertBefore(span, list.firstElementChild);
+
+    bubbleDownEditor();
+}
+
+const bubbleUpEditor = () => {
+    let editor = document.querySelector(".note-editor");
+    let offset = document.querySelector("#days-container").offsetHeight +
+        document.querySelector("#arrow-container").offsetHeight;
+
+    editor.style.top = "-" + offset + "px";
+}
+
+const bubbleDownEditor = () => {
+    let editor = document.querySelector(".note-editor");
+    editor.style.top = "100vh";
+}
+
+const init = () => {
+    let addNoteButtons = document.querySelectorAll(".add-note");
+    addNoteButtons.forEach(btn => {
+        btn.addEventListener("click", () => addNote(btn));
+    })
+
+    document.querySelector(".submit-note").addEventListener("click", submitNote);
+}
+
+const timePickerChange = (date) => {
+    let h = date.getHours();
+    let m = date.getMinutes();
+    if (h < 10) {
+        h = "0" + h;
+    }
+    if (m < 10) {
+        m = "0" + m;
+    }
+    lastTimePicked = `${h}:${m}`;
+}
+
+document.addEventListener("DOMContentLoaded", init);
 
 export default App;
