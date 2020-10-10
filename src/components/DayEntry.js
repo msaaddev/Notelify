@@ -4,12 +4,8 @@ const DayEntry = ({ badgeType, badgeContent, noteContent }) => {
     let badgeClasses = 'badge badge-pill ' + badgeType;
     return (
         <>
-        <span className={badgeClasses}>
-            {badgeContent}
-        </span>
-        <li className='list-group-item'>
-            {noteContent}
-        </li>
+            <span className={badgeClasses}>{badgeContent}</span>
+            <li className='list-group-item'>{noteContent}</li>
         </>
     );
 };
