@@ -10,8 +10,6 @@ function App() {
 
     const addNote = (btn) => {
         let card = btn.closest('.card');
-        console.log('this is before saving ');
-        console.log(card);
         setLastSelectedDay(card);
         bubbleUpEditor();
     };
@@ -51,8 +49,6 @@ function App() {
         li.className = 'list-group-item';
 
         let card = lastSelectedDay;
-        console.log('this is after saving ');
-        console.log(lastSelectedDay);
         let list = card.querySelector('.list-group');
 
         list.insertBefore(li, list.firstElementChild);
