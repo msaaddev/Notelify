@@ -2,10 +2,6 @@ body {
     /* overflow: hidden; */
 }
 
-.note-content-input {
-    margin-top: 20px;
-}
-
 .note-editor {
   background-color: white;
   position: relative;
@@ -17,4 +13,8 @@ body {
 
 .badge-radio {
     margin: 10px;
+}
+
+#emptySpace {
+    height: 5vh;
 }

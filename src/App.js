@@ -181,56 +181,102 @@ function App() {
                 </div>
             </div>
             <div className='note-editor container'>
+
+                <div id="emptySpace" className='row'></div>
+
                 <div className='row'>
-                    <div className='col-sm-12'>
-                        <div className='form-check'>
-                            <input
-                                className='form-check-input'
-                                type='radio'
-                                name='badge-radio'
-                                id='badge-deadline'
-                                defaultChecked
-                            ></input>
-                            <label
-                                className='form-check-label badge-radio'
-                                htmlFor='badge-deadline'
-                            >
-                                <span className='badge badge-pill badge-warning'>Deadline</span>
-                            </label>
+                    <div className='col-sm-3'></div>
+                    <div className='col-sm-6'>
+                        <div className='card'>
+                            <div className='card-body'>
+
+                                <div className='container'>
+                                    <div className='row'>                                        
+                                        <div className='col-sm-12' id="emptySpace"></div>
+                                        
+                                        <div className='col-sm-12'>
+                                            <h5>Choose label for your note</h5>
+                                        
+                                            <div className='form-check'>
+                                                <input
+                                                    className='form-check-input'
+                                                    type='radio'
+                                                    name='badge-radio'
+                                                    id='badge-deadline'
+                                                    defaultChecked
+                                                ></input>
+                                                <label
+                                                    className='form-check-label badge-radio'
+                                                    htmlFor='badge-deadline'
+                                                >
+                                                    <span className='badge badge-pill badge-warning'>Deadline</span>
+                                                </label>
+                                            </div>
+                                        
+                                        </div>
+
+                                        <div className='col-sm-12'>
+                                            <div className='form-check'>
+                                                <input
+                                                    className='form-check-input'
+                                                    type='radio'
+                                                    name='badge-radio'
+                                                    id='badge-link'
+                                                ></input>
+                                                <label className='form-check-label badge-radio' htmlFor='badge-link'>
+                                                    <span className='badge badge-pill badge-info'>
+                                                        Link or reference
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div className='col-sm-12'>
+                                            <div className='form-check'>
+                                                <input
+                                                    className='form-check-input'
+                                                    type='radio'
+                                                    name='badge-radio'
+                                                    id='badge-time'
+                                                ></input>
+                                                <label className='form-check-label badge-radio' htmlFor='badge-time'>
+                                                    <span className='badge badge-pill badge-light'>Time</span>
+                                                </label>
+                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                    <KeyboardTimePicker onChange={e => timePickerChange(e)} />
+                                                </MuiPickersUtilsProvider>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-sm-12" id="emptySpace">
+
+                                        </div>
+                                        <div className="col-sm-12">
+                                            <h5>Note or Event</h5>
+                                            <div className='form-group note-content-input'>            
+                                                <input id='note-content' className='form-control' placeholder="Write down anything important for you"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className='container'>
+                                    <div className='row'>
+                                        <div className='col-sm-12' id="emptySpace"></div>
+                                        <div className='col-sm-12'>
+                                            <button className='submit-note btn btn-primary'>Add</button>
+                                        </div>
+                                        <div className='col-sm-12' id="emptySpace"></div>
+                                    </div>
+                                </div>
+                                
+                            </div>
                         </div>
-                        <div className='form-check'>
-                            <input
-                                className='form-check-input'
-                                type='radio'
-                                name='badge-radio'
-                                id='badge-link'
-                            ></input>
-                            <label className='form-check-label badge-radio' htmlFor='badge-link'>
-                                <span className='badge badge-pill badge-info'>
-                                    Link or reference
-                                </span>
-                            </label>
-                        </div>
-                        <div className='form-check'>
-                            <input
-                                className='form-check-input'
-                                type='radio'
-                                name='badge-radio'
-                                id='badge-time'
-                            ></input>
-                            <label className='form-check-label badge-radio' htmlFor='badge-time'>
-                                <span className='badge badge-pill badge-light'>HH:MM</span>
-                                Select custom time:
-                            </label>
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <KeyboardTimePicker onChange={e => timePickerChange(e)} />
-                            </MuiPickersUtilsProvider>
-                        </div>
-                        <div className='form-group note-content-input'>
-                            <label htmlFor='note-content'>Note content</label>
-                            <input id='note-content' className='form-control' />
-                        </div>
-                        <button className='submit-note btn btn-primary'>Submit</button>
                     </div>
                 </div>
             </div>
