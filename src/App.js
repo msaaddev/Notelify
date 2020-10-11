@@ -138,45 +138,59 @@ function App() {
                     <div className='col-sm-4'></div>
                 </div>
             </div>
-            <div id='days-container' className='container'>
-                <div className='row'>
-                    <div className='col-sm-4'>
-                        <div className='card'>
-                            <CardHeader 
-                                monthDay='7th October' 
-                                weekDay='Wednesday' 
-                                relativeDay='Yesterday' 
-                                badgeType='badge-danger'
-                            />
-                            <CardBody notes={startingNotesLeft}/>
-                            <CardFooter/>
-                        </div>
+            <div className='flex-wrapper'>
+                <div id='days-container' className='flex-container'>
+                    <div className='card flex-card'>
+                        <CardHeader 
+                            monthDay='7th October' 
+                            weekDay='Wednesday' 
+                            relativeDay='Yesterday' 
+                            badgeType='badge-danger'
+                        />
+                        <CardBody notes={startingNotesLeft}/>
+                        <CardFooter/>
                     </div>
 
-                    <div className='col-sm-4'>
-                        <div className='card'>
-                            <CardHeader 
-                                monthDay='8th October' 
-                                weekDay='Thursday' 
-                                relativeDay='Today' 
-                                badgeType='badge-warning'
-                            />
-                            <CardBody notes={startingNotesMiddle}/>
-                            <CardFooter/>
-                        </div>
+                    <div className='card flex-card'>
+                        <CardHeader 
+                            monthDay='8th October' 
+                            weekDay='Thursday' 
+                            relativeDay='Today' 
+                            badgeType='badge-warning'
+                        />
+                        <CardBody notes={startingNotesMiddle}/>
+                        <CardFooter/>
                     </div>
 
-                    <div className='col-sm-4'>
-                        <div className='card'>
-                            <CardHeader 
-                                monthDay='9th October' 
-                                weekDay='Friday' 
-                                relativeDay='Tomorrow' 
-                                badgeType='badge-primary'
-                            />
-                            <CardBody notes={startingNotesRight}/>
-                            <CardFooter/>
-                        </div>
+                    <div className='card flex-card'>
+                        <CardHeader 
+                            monthDay='9th October' 
+                            weekDay='Friday' 
+                            relativeDay='Tomorrow' 
+                            badgeType='badge-primary'
+                        />
+                        <CardBody notes={startingNotesRight}/>
+                        <CardFooter/>
+                    </div>
+                    <div className='card flex-card'>
+                        <CardHeader 
+                            monthDay='9th October' 
+                            weekDay='Friday' 
+                            relativeDay='Tomorrow' 
+                            badgeType='badge-primary'
+                        />
+                        <CardBody notes={startingNotesRight}/>
+                        <CardFooter/>
+                    </div>
+                    <div className='card flex-card'>
+                        <CardHeader 
+                            monthDay='9th October' 
+                            weekDay='Friday' 
+                            relativeDay='Tomorrow' 
+                            badgeType='badge-primary'
+                        />
+                        <CardBody notes={startingNotesRight}/>
+                        <CardFooter/>
                     </div>
                 </div>
             </div>

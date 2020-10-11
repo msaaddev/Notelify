@@ -15,6 +15,24 @@ body {
     margin: 10px;
 }
 
+/* Saad, these are styles for flexbox */
+.flex-wrapper {
+    width: 100vw;
+    overflow: scroll;
+}
+
+.flex-container {
+    display: flex;
+    width: 200vw;
+}
+
+.flex-card {
+    flex-direction: row;
+    width: 350px;
+    margin: 0 30px;
+}
+/* and there they end */
+
 #emptySpace {
     height: 5vh;
 }
