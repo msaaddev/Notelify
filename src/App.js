@@ -42,8 +42,6 @@ function App() {
         let card = btn.closest('.card');
         namespaceGlobal.lastSelectedDayId = card.id;
         moveEditorLeft();
-        bubbleUpEditor();
-
     };
 
     const createBadgeFromRadioButtons = () => {
@@ -105,18 +103,6 @@ function App() {
         editor.style.left = '100vw';
     };
 
-<<<<<<< HEAD
-    const init = () => {
-        document.querySelectorAll('.add-note').forEach(btn => {
-            btn.addEventListener('click', () => addNote(btn));
-        });
-
-        document.querySelector('.submit-note').addEventListener('click', submitNote);
-        document.querySelector('.cancel-note').addEventListener('click', moveEditorRight);
-    };
-
-=======
->>>>>>> f233d4f209ea9133ec5f07d6dbdc97d326c803dc
     const timePickerChange = date => {
         console.log(date);
         let h = date.getHours();
@@ -195,7 +181,6 @@ function App() {
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
             <div className='note-editor'>
                 <div className='card note-editor-card'>
                     <div className='card-body'>
@@ -219,115 +204,6 @@ function App() {
                             >
                             <span className='badge badge-pill badge-warning'>Deadline</span>
                             </label>
-=======
-            <div className='note-editor container'>
-                <div id='emptySpace' className='row'></div>
-
-                <div className='row'>
-                    <div className='col-sm-3'></div>
-                    <div className='col-sm-6'>
-                        <div className='card'>
-                            <div className='card-body'>
-                                <div className='container'>
-                                    <div className='row'>
-                                        <div className='col-sm-12' id='emptySpace'></div>
-
-                                        <div className='col-sm-12'>
-                                            <h5>Choose label for your note</h5>
-
-                                            <div className='form-check'>
-                                                <input
-                                                    className='form-check-input'
-                                                    type='radio'
-                                                    name='badge-radio'
-                                                    id='badge-deadline'
-                                                    defaultChecked
-                                                ></input>
-                                                <label
-                                                    className='form-check-label badge-radio'
-                                                    htmlFor='badge-deadline'
-                                                >
-                                                    <span className='badge badge-pill badge-warning'>
-                                                        Deadline
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div className='col-sm-12'>
-                                            <div className='form-check'>
-                                                <input
-                                                    className='form-check-input'
-                                                    type='radio'
-                                                    name='badge-radio'
-                                                    id='badge-link'
-                                                ></input>
-                                                <label
-                                                    className='form-check-label badge-radio'
-                                                    htmlFor='badge-link'
-                                                >
-                                                    <span className='badge badge-pill badge-info'>
-                                                        Link or reference
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div className='col-sm-12'>
-                                            <div className='form-check'>
-                                                <input
-                                                    className='form-check-input'
-                                                    type='radio'
-                                                    name='badge-radio'
-                                                    id='badge-time'
-                                                ></input>
-                                                <label
-                                                    className='form-check-label badge-radio'
-                                                    htmlFor='badge-time'
-                                                >
-                                                    <span className='badge badge-pill badge-light'>
-                                                        Time
-                                                    </span>
-                                                </label>
-                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                                    <KeyboardTimePicker
-                                                        onChange={e => timePickerChange(e)}
-                                                    />
-                                                </MuiPickersUtilsProvider>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className='container'>
-                                    <div className='row'>
-                                        <div className='col-sm-12' id='emptySpace'></div>
-                                        <div className='col-sm-12'>
-                                            <h5>Note or Event</h5>
-                                            <div className='form-group note-content-input'>
-                                                <input
-                                                    id='note-content'
-                                                    className='form-control'
-                                                    placeholder='Write down anything important for you'
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className='container'>
-                                    <div className='row'>
-                                        <div className='col-sm-12' id='emptySpace'></div>
-                                        <div className='col-sm-12'>
-                                            <button className='submit-note btn btn-primary'>
-                                                Add
-                                            </button>
-                                        </div>
-                                        <div className='col-sm-12' id='emptySpace'></div>
-                                    </div>
-                                </div>
-                            </div>
->>>>>>> f233d4f209ea9133ec5f07d6dbdc97d326c803dc
                         </div>
 
                         <div className='form-check note-badge-line'>
