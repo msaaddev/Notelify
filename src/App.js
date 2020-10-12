@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
+
 /* import leftNotesData from './data/startingNotesLeft';
 import middleNotesData from './data/startingNotesMiddle';
 import rightNotesData from './data/startingNotesRight'; */
@@ -36,6 +37,8 @@ function App() {
             document.querySelectorAll('.cancel-note').forEach(btn => {
                 btn.addEventListener('click', moveEditorRight);
             });
+
+            initDates();
         };
         init();
     }, []);
@@ -118,10 +121,20 @@ function App() {
         namespaceGlobal.lastTimePicked = `${h}:${m}`;
     };
 
-    /*     const [startingNotesLeft] = useState(leftNotesData);
-    const [startingNotesMiddle] = useState(middleNotesData);
-    const [startingNotesRight] = useState(rightNotesData); */
     const [notesKeys] = useState(Object.keys(notes));
+
+    const initDates = () => {
+        let msInDay = 24 * 60 * 60 * 1000;
+        let cardTime = Date.now() - msInDay;
+        for (let note of notesKeys) {
+            let cardDate = new Date(cardTime);
+            let card = headInfo[note];
+            console.log(cardDate.getDay());
+            card.monthDate = cardDate.getDay(); // effect from this line is not visible
+            console.log(card.monthDay); // and it logs back unchanged value
+            cardTime += msInDay;
+        }
+    };
 
     return (
         <div id='#bootstrap-overrides'>
