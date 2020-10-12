@@ -1,5 +1,5 @@
 body {
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .header-delimiter {
@@ -8,14 +8,14 @@ body {
 }
 
 .note-editor {
-  background-color: white;
-  position: absolute;
-  left: 100vw;
-  height: 80vh;
+    background-color: white;
+    position: absolute;
+    left: 100vw;
+    height: 80vh;
 
-  transition: 0.5s ease-in-out 0s;
+    transition: 0.5s ease-in-out 0s;
 
-  width: 100vw;
+    width: 100vw;
 }
 
 .note-editor-card {
@@ -31,12 +31,12 @@ body {
 }
 
 .days-button {
-    border: 2px solid black;
     width: 7vw;
     margin: 0 1vw;
 }
 
-.days-button, .flex-wrapper {
+.days-button,
+.flex-wrapper {
     display: inline-block;
     vertical-align: top;
     height: 50vh;
@@ -44,20 +44,45 @@ body {
 
 .flex-wrapper {
     width: 80vw;
-    overflow: scroll;
+    overflow: hidden;
+    scroll-behavior: smooth;
 }
 
 .flex-container {
     display: flex;
-    width: 200vw;
+    width: 150vw;
 }
 
 .flex-card {
     flex-direction: row;
     width: 350px;
-    margin: 0 30px;
+    margin: 0 20px;
 }
 
 #emptySpace {
     height: 5vh;
+}
+
+/* slider */
+
+.days-button img {
+    width: 40px;
+    height: 40px;
+    transition: all 0.5s;
+    margin-top: 150px;
+}
+
+.prev-btn {
+    margin-left: 90px;
+}
+
+.prev-btn:hover {
+    margin-left: 80px;
+}
+
+.days-button img:hover {
+    margin-top: 145px;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
 }

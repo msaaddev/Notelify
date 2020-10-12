@@ -13,6 +13,9 @@ import { createNiceDateForCardHeader } from './TimeUtils.js';
 import './App.css';
 import './styles/style.css';
 
+import left from './images/left.png';
+import right from './images/right.png';
+
 function App() {
     let namespaceGlobal = {
         lastSelectedDayId: null,
@@ -66,27 +69,73 @@ function App() {
                 noteContent: 'Introduction to Algorithms, CLRS',
             },
         ],
+        note4: [
+            {
+                badgeType: 'badge-warning',
+                badgeContent: 'Deadline',
+                noteContent: 'Economics homework',
+            },
+            {
+                badgeType: 'badge-light',
+                badgeContent: '18-00',
+                noteContent: 'Call my team to discuss project',
+            },
+            {
+                badgeType: 'badge-info',
+                badgeContent: 'Links or references',
+                noteContent: 'Introduction to Algorithms, CLRS',
+            },
+        ],
+        note5: [
+            {
+                badgeType: 'badge-warning',
+                badgeContent: 'Deadline',
+                noteContent: 'Economics homework',
+            },
+            {
+                badgeType: 'badge-light',
+                badgeContent: '18-00',
+                noteContent: 'Call my team to discuss project',
+            },
+            {
+                badgeType: 'badge-info',
+                badgeContent: 'Links or references',
+                noteContent: 'Introduction to Algorithms, CLRS',
+            },
+        ],
     });
 
     const [headInfo, setHeadInfo] = useState({
-        note1: {                           
-            monthDay: '7th October',       
-            weekDay: 'Wednesday',          
-            relativeDay: 'Yesterday',      
-            badgeType: 'badge-danger',     
-        },                                 
-        note2: {                           
+        note1: {
+            monthDay: '7th October',
+            weekDay: 'Wednesday',
+            relativeDay: 'Yesterday',
+            badgeType: 'badge-danger',
+        },
+        note2: {
             monthDay: '8th October',
-            weekDay: 'Thursday',           
-            relativeDay: 'Today',          
-            badgeType: 'badge-warning',    
-        },                                 
-        note3: {                           
-            monthDay: '9th October',       
-            weekDay: 'Friday',             
-            relativeDay: 'Tomorrow',       
-            badgeType: 'badge-primary',    
-        }
+            weekDay: 'Thursday',
+            relativeDay: 'Today',
+            badgeType: 'badge-warning',
+        },
+        note3: {
+            monthDay: '9th October',
+            weekDay: 'Friday',
+            relativeDay: 'Tomorrow',
+            badgeType: 'badge-primary',
+        },
+        note4: {
+            monthDay: '9th October',
+            weekDay: 'Friday',
+            relativeDay: 'Tomorrow',
+            badgeType: 'badge-primary',
+        },
+        note5: {
+            monthDay: '9th October',
+            weekDay: 'Friday',
+            relativeDay: 'Tomorrow',
+            badgeType: 'badge-primary',
+        },
     });
 
     useEffect(() => {
@@ -191,7 +240,7 @@ function App() {
         let msInDay = 24 * 60 * 60 * 1000;
         let cardTime = Date.now() - msInDay;
 
-        let tmp = {...headInfo};
+        let tmp = { ...headInfo };
         for (let note of notesKeys) {
             let cardDate = new Date(cardTime);
             createNiceDateForCardHeader(tmp[note], cardDate);
@@ -200,13 +249,32 @@ function App() {
         setHeadInfo(tmp);
     };
 
+    const prevCard = () => {
+        const cardId = document.getElementById('slider');
+        cardId.scrollLeft -= 420;
+    };
+
+    const nextCard = () => {
+        const cardId = document.getElementById('slider');
+        cardId.scrollLeft += 420;
+    };
+
     return (
         <div id='#bootstrap-overrides'>
             <Header title='Notes' version='v0.0.1' />
             <div className={delimiterAfterHeader}></div>
-            <div className='days-button'></div>
-            <div className='flex-wrapper'>
-                <div id='days-container' className='flex-container slider'>
+            <div className='days-button'>
+                {/* <img src={left} alt='left' onClick={prevCard} /> */}
+
+                <img
+                    src='https://img.icons8.com/metro/52/000000/chevron-left.png'
+                    alt='left'
+                    onClick={prevCard}
+                    className='prev-btn'
+                />
+            </div>
+            <div className='flex-wrapper' id='slider'>
+                <div id='days-container' className='flex-container'>
                     {notesKeys.map(note => (
                         <div className='card flex-card slide'>
                             <CardHeader headInfo={headInfo[note]} />
@@ -216,7 +284,15 @@ function App() {
                     ))}
                 </div>
             </div>
-            <div className='days-button'></div>
+            <div className='days-button'>
+                <img
+                    src='https://img.icons8.com/metro/52/000000/chevron-right.png'
+                    alt='right'
+                    onClick={nextCard}
+                    className='next-btn'
+                />
+                {/* <img src={right} alt='left' onClick={nextCard} /> */}
+            </div>
             <div className='note-editor'>
                 <div className='card note-editor-card'>
                     <div className='card-body'>
