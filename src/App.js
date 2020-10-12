@@ -16,12 +16,21 @@ import './App.css';
 import './styles/style.css';
 
 function App() {
-    const [lastSelectedDay, setLastSelectedDay] = useState(null);
+    const [lastSelectedDayId, setLastSelectedDayId] = useState(null);
     const [lastTimePicked, setLastTimePicked] = useState(null);
+
+    const leftCardId = "left-card";
+    const middleCardId = "middle-card";
+    const rightCardId = "right-card";
 
     const addNote = btn => {
         let card = btn.closest('.card');
-        setLastSelectedDay(card);
+
+        // const [lastSelectedDayId, setLastSelectedDayId] = useState(null);
+        console.log(card.id); // some string
+        setLastSelectedDayId(card.id); // ok
+        console.log(lastSelectedDayId); // null
+
         bubbleUpEditor();
     };
 
@@ -59,7 +68,8 @@ function App() {
         li.innerHTML = noteContent;
         li.className = 'list-group-item';
 
-        let card = lastSelectedDay;
+        console.log(lastSelectedDayId);
+        let card = document.querySelector('#' + lastSelectedDayId);
         let list = card.querySelector('.list-group');
 
         list.insertBefore(li, list.firstElementChild);
@@ -140,7 +150,7 @@ function App() {
             </div>
             <div className='flex-wrapper'>
                 <div id='days-container' className='flex-container'>
-                    <div className='card flex-card'>
+                    <div className='card flex-card' id={leftCardId}>
                         <CardHeader 
                             monthDay='7th October' 
                             weekDay='Wednesday' 
@@ -151,7 +161,7 @@ function App() {
                         <CardFooter/>
                     </div>
 
-                    <div className='card flex-card'>
+                    <div className='card flex-card' id={middleCardId}>
                         <CardHeader 
                             monthDay='8th October' 
                             weekDay='Thursday' 
@@ -162,7 +172,7 @@ function App() {
                         <CardFooter/>
                     </div>
 
-                    <div className='card flex-card'>
+                    <div className='card flex-card' id={rightCardId}>
                         <CardHeader 
                             monthDay='9th October' 
                             weekDay='Friday' 
