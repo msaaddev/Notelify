@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = ({ title, version }) => {
     return (
-        <header className='jumbotron'>
+        <header className='jumbotron title-header'>
             <div className='container'>
                 <div className='row row-header'>
                     <div className='col-6 col-sm-6'>
