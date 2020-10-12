@@ -31,9 +31,10 @@ body {
 }
 
 .days-button {
+    box-sizing: border-box;
     border: 2px solid black;
-    width: 7vw;
-    margin: 0 1vw;
+    width: 8%;
+    margin: 0 1%;
 }
 
 .days-button, .flex-wrapper {
@@ -43,7 +44,7 @@ body {
 }
 
 .flex-wrapper {
-    width: 80vw;
+    width: 80%;
     overflow: scroll;
 }
 
@@ -56,8 +57,4 @@ body {
     flex-direction: row;
     width: 350px;
     margin: 0 30px;
-}
-
-#emptySpace {
-    height: 5vh;
 }

@@ -202,7 +202,7 @@ function App() {
 
     return (
         <div id='#bootstrap-overrides'>
-            <Header title='Notes' version='v0.0.1' />
+            <Header title='Notes' version='v0.1.1' />
             <div className={delimiterAfterHeader}></div>
             <div className='days-button'></div>
             <div className='flex-wrapper'>
