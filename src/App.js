@@ -16,7 +16,10 @@ import './App.css';
 import './styles/style.css';
 
 function App() {
-    const [lastSelectedDayId, setLastSelectedDayId] = useState(null);
+    let namespaceGlobal = {
+        lastSelectedDayId: null
+    };
+
     const [lastTimePicked, setLastTimePicked] = useState(null);
 
     const leftCardId = "left-card";
@@ -26,10 +29,7 @@ function App() {
     const addNote = btn => {
         let card = btn.closest('.card');
 
-        // const [lastSelectedDayId, setLastSelectedDayId] = useState(null);
-        console.log(card.id); // some string
-        setLastSelectedDayId(card.id); // ok
-        console.log(lastSelectedDayId); // null
+        namespaceGlobal.lastSelectedDayId = card.id;
 
         bubbleUpEditor();
     };
@@ -68,8 +68,7 @@ function App() {
         li.innerHTML = noteContent;
         li.className = 'list-group-item';
 
-        console.log(lastSelectedDayId);
-        let card = document.querySelector('#' + lastSelectedDayId);
+        let card = document.querySelector('#' + namespaceGlobal.lastSelectedDayId);
         let list = card.querySelector('.list-group');
 
         list.insertBefore(li, list.firstElementChild);
@@ -93,11 +92,14 @@ function App() {
     };
 
     const init = () => {
+        console.log("A");
         document.querySelectorAll('.add-note').forEach(btn => {
             btn.addEventListener('click', () => addNote(btn));
         });
 
-        document.querySelector('.submit-note').addEventListener('click', submitNote);
+        document.querySelectorAll('.submit-note').forEach(btn => {
+           btn.addEventListener('click', submitNote);
+        });
     };
 
     const timePickerChange = date => {
@@ -114,13 +116,15 @@ function App() {
         setLastTimePicked(temp);
     };
 
-    document.addEventListener('DOMContentLoaded', init);
-
 
     const [startingNotesLeft] = useState(leftNotesData);
     const [startingNotesMiddle] = useState(middleNotesData);
     const [startingNotesRight] = useState(rightNotesData);
-    
+
+    init();
+
+    // I tried to do `document.addEventListener('DOMContentLoaded', init);` but this also executed 2 times
+
     return (
         <div>
             <Header title='Notes' version='v0.0.1' />
