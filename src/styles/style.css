@@ -33,6 +33,9 @@ body {
 .days-button {
     width: 7vw;
     margin: 0 1vw;
+    box-sizing: border-box;
+    width: 8%;
+    margin: 0 1%;
 }
 
 .days-button,
@@ -44,8 +47,9 @@ body {
 
 .flex-wrapper {
     width: 80vw;
-    overflow: hidden;
     scroll-behavior: smooth;
+    width: 80%;
+    overflow: hidden;
 }
 
 .flex-container {
