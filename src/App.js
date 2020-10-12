@@ -10,6 +10,11 @@ import CardFooter from './components/CardFooter';
 
 import { createNiceDateForCardHeader } from './TimeUtils.js';
 
+import left from './images/left.png';
+import leftSlide from './images/left-slide.png';
+import right from './images/right.png';
+import rightSlide from './images/right-slide.png';
+
 import './App.css';
 import './styles/style.css';
 
@@ -294,17 +299,8 @@ function App() {
             <Header title='Notes' version='v0.1.1' />
             <div className={delimiterAfterHeader}></div>
             <div className='days-button'>
-                <img
-                    src='https://img.icons8.com/metro/52/000000/chevron-left.png'
-                    alt='left'
-                    onClick={prevCard}
-                    className='prev-btn'
-                />
-                <img
-                    src='https://img.icons8.com/metro/52/000000/double-left.png'
-                    onClick={prevSlide}
-                    className='prev-btn'
-                />
+                <img src={left} alt='left' onClick={prevCard} className='prev-btn' />
+                <img src={leftSlide} alt='left-slide' onClick={prevSlide} className='prev-btn' />
             </div>
             <div className='flex-wrapper' id='slider'>
                 <div id='days-container' className='flex-container'>
@@ -318,17 +314,8 @@ function App() {
                 </div>
             </div>
             <div className='days-button'>
-                <img
-                    src='https://img.icons8.com/metro/52/000000/chevron-right.png'
-                    alt='right'
-                    onClick={nextCard}
-                    className='next-btn'
-                />
-                <img
-                    src='https://img.icons8.com/metro/52/000000/double-right.png'
-                    onClick={nextSlide}
-                    className='next-btn'
-                />
+                <img src={right} alt='right' onClick={nextCard} className='next-btn' />
+                <img src={rightSlide} alt='right slide' onClick={nextSlide} className='next-btn' />
             </div>
             <div className='note-editor'>
                 <div className='card note-editor-card'>
