@@ -34,7 +34,7 @@ function App() {
             });
         };
         init();
-    }, [addNote, submitNote]);
+    }, []);
 
     const leftCardId = 'left-card';
     const middleCardId = 'middle-card';
