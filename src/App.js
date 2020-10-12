@@ -13,9 +13,6 @@ import { createNiceDateForCardHeader } from './TimeUtils.js';
 import './App.css';
 import './styles/style.css';
 
-import left from './images/left.png';
-import right from './images/right.png';
-
 function App() {
     let namespaceGlobal = {
         lastSelectedDayId: null,
@@ -103,6 +100,23 @@ function App() {
                 noteContent: 'Introduction to Algorithms, CLRS',
             },
         ],
+        note6: [
+            {
+                badgeType: 'badge-warning',
+                badgeContent: 'Deadline',
+                noteContent: 'Economics homework',
+            },
+            {
+                badgeType: 'badge-light',
+                badgeContent: '18-00',
+                noteContent: 'Call my team to discuss project',
+            },
+            {
+                badgeType: 'badge-info',
+                badgeContent: 'Links or references',
+                noteContent: 'Introduction to Algorithms, CLRS',
+            },
+        ],
     });
 
     const [headInfo, setHeadInfo] = useState({
@@ -131,6 +145,12 @@ function App() {
             badgeType: 'badge-primary',
         },
         note5: {
+            monthDay: '9th October',
+            weekDay: 'Friday',
+            relativeDay: 'Tomorrow',
+            badgeType: 'badge-primary',
+        },
+        note6: {
             monthDay: '9th October',
             weekDay: 'Friday',
             relativeDay: 'Tomorrow',
@@ -259,17 +279,30 @@ function App() {
         cardId.scrollLeft += 420;
     };
 
+    const prevSlide = () => {
+        const cardId = document.getElementById('slider');
+        cardId.scrollLeft -= 1100;
+    };
+
+    const nextSlide = () => {
+        const cardId = document.getElementById('slider');
+        cardId.scrollLeft += 1100;
+    };
+
     return (
         <div id='#bootstrap-overrides'>
             <Header title='Notes' version='v0.1.1' />
             <div className={delimiterAfterHeader}></div>
             <div className='days-button'>
-                {/* <img src={left} alt='left' onClick={prevCard} /> */}
-
                 <img
                     src='https://img.icons8.com/metro/52/000000/chevron-left.png'
                     alt='left'
                     onClick={prevCard}
+                    className='prev-btn'
+                />
+                <img
+                    src='https://img.icons8.com/metro/52/000000/double-left.png'
+                    onClick={prevSlide}
                     className='prev-btn'
                 />
             </div>
@@ -291,7 +324,11 @@ function App() {
                     onClick={nextCard}
                     className='next-btn'
                 />
-                {/* <img src={right} alt='left' onClick={nextCard} /> */}
+                <img
+                    src='https://img.icons8.com/metro/52/000000/double-right.png'
+                    onClick={nextSlide}
+                    className='next-btn'
+                />
             </div>
             <div className='note-editor'>
                 <div className='card note-editor-card'>
