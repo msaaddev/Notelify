@@ -18,13 +18,11 @@ import './styles/style.css';
 function App() {
     let namespaceGlobal = {
         lastSelectedDayId: null,
+        lastTimePicked: null
     };
-
-    const [lastTimePicked, setLastTimePicked] = useState(null);
 
     useEffect(() => {
         const init = () => {
-            console.log('A');
             document.querySelectorAll('.add-note').forEach(btn => {
                 btn.addEventListener('click', () => addNote(btn));
             });
@@ -65,7 +63,7 @@ function App() {
             classNames.push('badge-info');
         } else {
             // time.checked
-            span.innerHTML = lastTimePicked;
+            span.innerHTML = namespaceGlobal.lastTimePicked;
             classNames.push('badge-light');
         }
 
@@ -115,8 +113,7 @@ function App() {
         if (m < 10) {
             m = '0' + m;
         }
-        const temp = `${h}:${m}`;
-        setLastTimePicked(temp);
+        namespaceGlobal.lastTimePicked = `${h}:${m}`;
     };
 
     const [startingNotesLeft] = useState(leftNotesData);
