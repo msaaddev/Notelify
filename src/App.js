@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -17,14 +17,28 @@ import './styles/style.css';
 
 function App() {
     let namespaceGlobal = {
-        lastSelectedDayId: null
+        lastSelectedDayId: null,
     };
 
     const [lastTimePicked, setLastTimePicked] = useState(null);
 
-    const leftCardId = "left-card";
-    const middleCardId = "middle-card";
-    const rightCardId = "right-card";
+    useEffect(() => {
+        const init = () => {
+            console.log('A');
+            document.querySelectorAll('.add-note').forEach(btn => {
+                btn.addEventListener('click', () => addNote(btn));
+            });
+
+            document.querySelectorAll('.submit-note').forEach(btn => {
+                btn.addEventListener('click', submitNote);
+            });
+        };
+        init();
+    }, [addNote, submitNote]);
+
+    const leftCardId = 'left-card';
+    const middleCardId = 'middle-card';
+    const rightCardId = 'right-card';
 
     const addNote = btn => {
         let card = btn.closest('.card');
@@ -91,17 +105,6 @@ function App() {
         editor.style.top = '100vh';
     };
 
-    const init = () => {
-        console.log("A");
-        document.querySelectorAll('.add-note').forEach(btn => {
-            btn.addEventListener('click', () => addNote(btn));
-        });
-
-        document.querySelectorAll('.submit-note').forEach(btn => {
-           btn.addEventListener('click', submitNote);
-        });
-    };
-
     const timePickerChange = date => {
         console.log(date);
         let h = date.getHours();
@@ -116,14 +119,9 @@ function App() {
         setLastTimePicked(temp);
     };
 
-
     const [startingNotesLeft] = useState(leftNotesData);
     const [startingNotesMiddle] = useState(middleNotesData);
     const [startingNotesRight] = useState(rightNotesData);
-
-    init();
-
-    // I tried to do `document.addEventListener('DOMContentLoaded', init);` but this also executed 2 times
 
     return (
         <div>
@@ -155,76 +153,74 @@ function App() {
             <div className='flex-wrapper'>
                 <div id='days-container' className='flex-container'>
                     <div className='card flex-card' id={leftCardId}>
-                        <CardHeader 
-                            monthDay='7th October' 
-                            weekDay='Wednesday' 
-                            relativeDay='Yesterday' 
+                        <CardHeader
+                            monthDay='7th October'
+                            weekDay='Wednesday'
+                            relativeDay='Yesterday'
                             badgeType='badge-danger'
                         />
-                        <CardBody notes={startingNotesLeft}/>
-                        <CardFooter/>
+                        <CardBody notes={startingNotesLeft} />
+                        <CardFooter />
                     </div>
 
                     <div className='card flex-card' id={middleCardId}>
-                        <CardHeader 
-                            monthDay='8th October' 
-                            weekDay='Thursday' 
-                            relativeDay='Today' 
+                        <CardHeader
+                            monthDay='8th October'
+                            weekDay='Thursday'
+                            relativeDay='Today'
                             badgeType='badge-warning'
                         />
-                        <CardBody notes={startingNotesMiddle}/>
-                        <CardFooter/>
+                        <CardBody notes={startingNotesMiddle} />
+                        <CardFooter />
                     </div>
 
                     <div className='card flex-card' id={rightCardId}>
-                        <CardHeader 
-                            monthDay='9th October' 
-                            weekDay='Friday' 
-                            relativeDay='Tomorrow' 
+                        <CardHeader
+                            monthDay='9th October'
+                            weekDay='Friday'
+                            relativeDay='Tomorrow'
                             badgeType='badge-primary'
                         />
-                        <CardBody notes={startingNotesRight}/>
-                        <CardFooter/>
+                        <CardBody notes={startingNotesRight} />
+                        <CardFooter />
                     </div>
                     <div className='card flex-card'>
-                        <CardHeader 
-                            monthDay='9th October' 
-                            weekDay='Friday' 
-                            relativeDay='Tomorrow' 
+                        <CardHeader
+                            monthDay='9th October'
+                            weekDay='Friday'
+                            relativeDay='Tomorrow'
                             badgeType='badge-primary'
                         />
-                        <CardBody notes={startingNotesRight}/>
-                        <CardFooter/>
+                        <CardBody notes={startingNotesRight} />
+                        <CardFooter />
                     </div>
                     <div className='card flex-card'>
-                        <CardHeader 
-                            monthDay='9th October' 
-                            weekDay='Friday' 
-                            relativeDay='Tomorrow' 
+                        <CardHeader
+                            monthDay='9th October'
+                            weekDay='Friday'
+                            relativeDay='Tomorrow'
                             badgeType='badge-primary'
                         />
-                        <CardBody notes={startingNotesRight}/>
-                        <CardFooter/>
+                        <CardBody notes={startingNotesRight} />
+                        <CardFooter />
                     </div>
                 </div>
             </div>
             <div className='note-editor container'>
-
-                <div id="emptySpace" className='row'></div>
+                <div id='emptySpace' className='row'></div>
 
                 <div className='row'>
                     <div className='col-sm-3'></div>
                     <div className='col-sm-6'>
                         <div className='card'>
                             <div className='card-body'>
-
                                 <div className='container'>
-                                    <div className='row'>                                        
-                                        <div className='col-sm-12' id="emptySpace"></div>
-                                        
+                                    <div className='row'>
+                                        <div className='col-sm-12' id='emptySpace'></div>
+
                                         <div className='col-sm-12'>
                                             <h5>Choose label for your note</h5>
-                                        
+
                                             <div className='form-check'>
                                                 <input
                                                     className='form-check-input'
@@ -237,10 +233,11 @@ function App() {
                                                     className='form-check-label badge-radio'
                                                     htmlFor='badge-deadline'
                                                 >
-                                                    <span className='badge badge-pill badge-warning'>Deadline</span>
+                                                    <span className='badge badge-pill badge-warning'>
+                                                        Deadline
+                                                    </span>
                                                 </label>
                                             </div>
-                                        
                                         </div>
 
                                         <div className='col-sm-12'>
@@ -251,7 +248,10 @@ function App() {
                                                     name='badge-radio'
                                                     id='badge-link'
                                                 ></input>
-                                                <label className='form-check-label badge-radio' htmlFor='badge-link'>
+                                                <label
+                                                    className='form-check-label badge-radio'
+                                                    htmlFor='badge-link'
+                                                >
                                                     <span className='badge badge-pill badge-info'>
                                                         Link or reference
                                                     </span>
@@ -267,27 +267,19 @@ function App() {
                                                     name='badge-radio'
                                                     id='badge-time'
                                                 ></input>
-                                                <label className='form-check-label badge-radio' htmlFor='badge-time'>
-                                                    <span className='badge badge-pill badge-light'>Time</span>
+                                                <label
+                                                    className='form-check-label badge-radio'
+                                                    htmlFor='badge-time'
+                                                >
+                                                    <span className='badge badge-pill badge-light'>
+                                                        Time
+                                                    </span>
                                                 </label>
                                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                                    <KeyboardTimePicker onChange={e => timePickerChange(e)} />
+                                                    <KeyboardTimePicker
+                                                        onChange={e => timePickerChange(e)}
+                                                    />
                                                 </MuiPickersUtilsProvider>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                
-                                <div className="container">
-                                    <div className="row">
-                                        <div className="col-sm-12" id="emptySpace">
-
-                                        </div>
-                                        <div className="col-sm-12">
-                                            <h5>Note or Event</h5>
-                                            <div className='form-group note-content-input'>            
-                                                <input id='note-content' className='form-control' placeholder="Write down anything important for you"/>
                                             </div>
                                         </div>
                                     </div>
@@ -295,14 +287,31 @@ function App() {
 
                                 <div className='container'>
                                     <div className='row'>
-                                        <div className='col-sm-12' id="emptySpace"></div>
+                                        <div className='col-sm-12' id='emptySpace'></div>
                                         <div className='col-sm-12'>
-                                            <button className='submit-note btn btn-primary'>Add</button>
+                                            <h5>Note or Event</h5>
+                                            <div className='form-group note-content-input'>
+                                                <input
+                                                    id='note-content'
+                                                    className='form-control'
+                                                    placeholder='Write down anything important for you'
+                                                />
+                                            </div>
                                         </div>
-                                        <div className='col-sm-12' id="emptySpace"></div>
                                     </div>
                                 </div>
-                                
+
+                                <div className='container'>
+                                    <div className='row'>
+                                        <div className='col-sm-12' id='emptySpace'></div>
+                                        <div className='col-sm-12'>
+                                            <button className='submit-note btn btn-primary'>
+                                                Add
+                                            </button>
+                                        </div>
+                                        <div className='col-sm-12' id='emptySpace'></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
