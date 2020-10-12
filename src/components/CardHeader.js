@@ -1,21 +1,19 @@
 import React from 'react';
 
-const CardHeader = ({monthDay, weekDay, relativeDay, badgeType}) => {
-    let badgeClasses = 'badge badge-pill ' + badgeType;
+const CardHeader = ({ headInfo }) => {
+    let badgeClasses = 'badge badge-pill ' + headInfo.badgeType;
     return (
         <div className='card-header'>
             <div className='row'>
                 <div className='col-sm-6'>
                     <h4>
-                        {monthDay}
-                        <p className='text-muted'>{weekDay}</p>
+                        {headInfo.monthDay}
+                        <p className='text-muted'>{headInfo.weekDay}</p>
                     </h4>
                 </div>
 
                 <div className='col-sm-6'>
-                    <span className={badgeClasses}>
-                        {relativeDay}
-                    </span>
+                    <span className={badgeClasses}>{headInfo.relativeDay}</span>
                 </div>
             </div>
         </div>

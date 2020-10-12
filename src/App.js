@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
-import leftNotesData from './data/startingNotesLeft';
+/* import leftNotesData from './data/startingNotesLeft';
 import middleNotesData from './data/startingNotesMiddle';
-import rightNotesData from './data/startingNotesRight';
+import rightNotesData from './data/startingNotesRight'; */
+import notes from './data/notes';
+import headInfo from './data/notesHead';
 
 import Header from './components/Header';
 
@@ -18,7 +20,7 @@ import './styles/style.css';
 function App() {
     let namespaceGlobal = {
         lastSelectedDayId: null,
-        lastTimePicked: null
+        lastTimePicked: null,
     };
 
     useEffect(() => {
@@ -37,10 +39,6 @@ function App() {
         };
         init();
     }, []);
-
-    const leftCardId = 'left-card';
-    const middleCardId = 'middle-card';
-    const rightCardId = 'right-card';
 
     const addNote = btn => {
         let card = btn.closest('.card');
@@ -94,8 +92,8 @@ function App() {
     const delimiterAfterHeader = 'header-delimiter';
     const moveEditorLeft = () => {
         let editor = document.querySelector('.note-editor');
-        let offset = 
-            document.querySelector('.jumbotron').offsetHeight + 
+        let offset =
+            document.querySelector('.jumbotron').offsetHeight +
             document.querySelector('.' + delimiterAfterHeader).offsetHeight;
 
         editor.style.top = offset + 'px';
@@ -120,103 +118,62 @@ function App() {
         namespaceGlobal.lastTimePicked = `${h}:${m}`;
     };
 
-    const [startingNotesLeft] = useState(leftNotesData);
+    /*     const [startingNotesLeft] = useState(leftNotesData);
     const [startingNotesMiddle] = useState(middleNotesData);
-    const [startingNotesRight] = useState(rightNotesData);
+    const [startingNotesRight] = useState(rightNotesData); */
+    const [notesKeys] = useState(Object.keys(notes));
 
     return (
-        <div id="#bootstrap-overrides">
+        <div id='#bootstrap-overrides'>
             <Header title='Notes' version='v0.0.1' />
             <div className={delimiterAfterHeader}></div>
-
             <div className='flex-wrapper'>
-                <div id='days-container' className='flex-container'>
-                    <div className='card flex-card' id={leftCardId}>
-                        <CardHeader
-                            monthDay='7th October'
-                            weekDay='Wednesday'
-                            relativeDay='Yesterday'
-                            badgeType='badge-danger'
-                        />
-                        <CardBody notes={startingNotesLeft} />
-                        <CardFooter />
-                    </div>
-
-                    <div className='card flex-card' id={middleCardId}>
-                        <CardHeader
-                            monthDay='8th October'
-                            weekDay='Thursday'
-                            relativeDay='Today'
-                            badgeType='badge-warning'
-                        />
-                        <CardBody notes={startingNotesMiddle} />
-                        <CardFooter />
-                    </div>
-
-                    <div className='card flex-card' id={rightCardId}>
-                        <CardHeader
-                            monthDay='9th October'
-                            weekDay='Friday'
-                            relativeDay='Tomorrow'
-                            badgeType='badge-primary'
-                        />
-                        <CardBody notes={startingNotesRight} />
-                        <CardFooter />
-                    </div>
-                    <div className='card flex-card'>
-                        <CardHeader
-                            monthDay='9th October'
-                            weekDay='Friday'
-                            relativeDay='Tomorrow'
-                            badgeType='badge-primary'
-                        />
-                        <CardBody notes={startingNotesRight} />
-                        <CardFooter />
-                    </div>
-                    <div className='card flex-card'>
-                        <CardHeader
-                            monthDay='9th October'
-                            weekDay='Friday'
-                            relativeDay='Tomorrow'
-                            badgeType='badge-primary'
-                        />
-                        <CardBody notes={startingNotesRight} />
-                        <CardFooter />
-                    </div>
+                <div id='days-container' className='flex-container slider'>
+                    {notesKeys.map(note => (
+                        <div className='card flex-card slide'>
+                            <CardHeader headInfo={headInfo[note]} />
+                            <CardBody notes={notes[note]} />
+                            <CardFooter />
+                        </div>
+                    ))}
                 </div>
             </div>
             <div className='note-editor'>
                 <div className='card note-editor-card'>
                     <div className='card-body'>
                         <h5>Note or Event</h5>
-                        <div className='form-group note-content-input'>            
-                            <input id='note-content' className='form-control' placeholder="Write down anything important for you"/>
+                        <div className='form-group note-content-input'>
+                            <input
+                                id='note-content'
+                                className='form-control'
+                                placeholder='Write down anything important for you'
+                            />
                         </div>
                         <h5>Choose label for your note</h5>
 
                         <div className='form-check note-badge-line'>
                             <input
-                             className='form-check-input'
-                             type='radio'
-                             name='badge-radio'
-                             id='badge-deadline'
-                             defaultChecked
-                             ></input>
+                                className='form-check-input'
+                                type='radio'
+                                name='badge-radio'
+                                id='badge-deadline'
+                                defaultChecked
+                            ></input>
                             <label
-                             className='form-check-label badge-radio'
-                             htmlFor='badge-deadline'
+                                className='form-check-label badge-radio'
+                                htmlFor='badge-deadline'
                             >
-                            <span className='badge badge-pill badge-warning'>Deadline</span>
+                                <span className='badge badge-pill badge-warning'>Deadline</span>
                             </label>
                         </div>
 
                         <div className='form-check note-badge-line'>
                             <input
-                             className='form-check-input'
-                             type='radio'
-                             name='badge-radio'
-                             id='badge-link'
-                             ></input>
+                                className='form-check-input'
+                                type='radio'
+                                name='badge-radio'
+                                id='badge-link'
+                            ></input>
                             <label className='form-check-label badge-radio' htmlFor='badge-link'>
                                 <span className='badge badge-pill badge-info'>
                                     Link or reference
@@ -226,11 +183,11 @@ function App() {
 
                         <div className='form-check note-badge-line'>
                             <input
-                             className='form-check-input'
-                             type='radio'
-                             name='badge-radio'
-                             id='badge-time'
-                             ></input>
+                                className='form-check-input'
+                                type='radio'
+                                name='badge-radio'
+                                id='badge-time'
+                            ></input>
                             <label className='form-check-label badge-radio' htmlFor='badge-time'>
                                 <span className='badge badge-pill badge-light'>Time</span>
                             </label>
@@ -239,14 +196,13 @@ function App() {
                             </MuiPickersUtilsProvider>
                         </div>
 
-
                         <button className='submit-note btn btn-primary'>Add</button>
                         <button className='cancel-note btn'>Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
-);
+    );
 }
 
 export default App;
