@@ -30,6 +30,10 @@ function App() {
             document.querySelectorAll('.submit-note').forEach(btn => {
                 btn.addEventListener('click', submitNote);
             });
+
+            document.querySelectorAll('.cancel-note').forEach(btn => {
+                btn.addEventListener('click', moveEditorRight);
+            });
         };
         init();
     }, []);
