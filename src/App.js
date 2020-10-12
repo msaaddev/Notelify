@@ -2,16 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
-
-/* import leftNotesData from './data/startingNotesLeft';
-import middleNotesData from './data/startingNotesMiddle';
-import rightNotesData from './data/startingNotesRight'; */
-
 import Header from './components/Header';
 
 import CardHeader from './components/CardHeader';
 import CardBody from './components/CardBody';
 import CardFooter from './components/CardFooter';
+
+import { createNiceDateForCardHeader } from './TimeUtils.js';
 
 import './App.css';
 import './styles/style.css';
@@ -71,25 +68,25 @@ function App() {
         ],
     });
 
-    const [headInfo, setNotesHead] = useState({
-        note1: {
-            monthDay: '7th October',
-            weekDay: 'Wednesday',
-            relativeDay: 'Yesterday',
-            badgeType: 'badge-danger',
-        },
-        note2: {
+    const [headInfo, setHeadInfo] = useState({
+        note1: {                           
+            monthDay: '7th October',       
+            weekDay: 'Wednesday',          
+            relativeDay: 'Yesterday',      
+            badgeType: 'badge-danger',     
+        },                                 
+        note2: {                           
             monthDay: '8th October',
-            weekDay: 'Thursday',
-            relativeDay: 'Today',
-            badgeType: 'badge-warning',
-        },
-        note3: {
-            monthDay: '9th October',
-            weekDay: 'Friday',
-            relativeDay: 'Tomorrow',
-            badgeType: 'badge-primary',
-        },
+            weekDay: 'Thursday',           
+            relativeDay: 'Today',          
+            badgeType: 'badge-warning',    
+        },                                 
+        note3: {                           
+            monthDay: '9th October',       
+            weekDay: 'Friday',             
+            relativeDay: 'Tomorrow',       
+            badgeType: 'badge-primary',    
+        }
     });
 
     useEffect(() => {
@@ -177,7 +174,6 @@ function App() {
     };
 
     const timePickerChange = date => {
-        console.log(date);
         let h = date.getHours();
         let m = date.getMinutes();
         if (h < 10) {
@@ -194,14 +190,14 @@ function App() {
     const initDates = () => {
         let msInDay = 24 * 60 * 60 * 1000;
         let cardTime = Date.now() - msInDay;
+
+        let tmp = {...headInfo};
         for (let note of notesKeys) {
             let cardDate = new Date(cardTime);
-            let card = headInfo[note];
-            console.log(cardDate.getDay());
-            card.monthDate = cardDate.getDay(); // effect from this line is not visible
-            console.log(card.monthDay); // and it logs back unchanged value
+            createNiceDateForCardHeader(tmp[note], cardDate);
             cardTime += msInDay;
         }
+        setHeadInfo(tmp);
     };
 
     return (
