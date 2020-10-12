@@ -6,8 +6,6 @@ import DateFnsUtils from '@date-io/date-fns';
 /* import leftNotesData from './data/startingNotesLeft';
 import middleNotesData from './data/startingNotesMiddle';
 import rightNotesData from './data/startingNotesRight'; */
-import notes from './data/notes';
-import headInfo from './data/notesHead';
 
 import Header from './components/Header';
 
@@ -23,6 +21,76 @@ function App() {
         lastSelectedDayId: null,
         lastTimePicked: null,
     };
+
+    const [notes, setNotes] = useState({
+        note1: [
+            {
+                badgeType: 'badge-warning',
+                badgeContent: 'Deadline',
+                noteContent: 'Calculus homework',
+            },
+            {
+                badgeType: 'badge-light',
+                badgeContent: '16-30',
+                noteContent: 'Meet Alice at Hard Rock Cafe',
+            },
+        ],
+        note2: [
+            {
+                badgeType: 'badge-warning',
+                badgeContent: 'Deadline',
+                noteContent: 'Java test on Maven',
+            },
+            {
+                badgeType: 'badge-light',
+                badgeContent: '15-00',
+                noteContent: 'Gym',
+            },
+            {
+                badgeType: 'badge-info',
+                badgeContent: 'Links or references',
+                noteContent: "The hitchhiker's guide to the galaxy",
+            },
+        ],
+        note3: [
+            {
+                badgeType: 'badge-warning',
+                badgeContent: 'Deadline',
+                noteContent: 'Economics homework',
+            },
+            {
+                badgeType: 'badge-light',
+                badgeContent: '18-00',
+                noteContent: 'Call my team to discuss project',
+            },
+            {
+                badgeType: 'badge-info',
+                badgeContent: 'Links or references',
+                noteContent: 'Introduction to Algorithms, CLRS',
+            },
+        ],
+    });
+
+    const [headInfo, setNotesHead] = useState({
+        note1: {
+            monthDay: '7th October',
+            weekDay: 'Wednesday',
+            relativeDay: 'Yesterday',
+            badgeType: 'badge-danger',
+        },
+        note2: {
+            monthDay: '8th October',
+            weekDay: 'Thursday',
+            relativeDay: 'Today',
+            badgeType: 'badge-warning',
+        },
+        note3: {
+            monthDay: '9th October',
+            weekDay: 'Friday',
+            relativeDay: 'Tomorrow',
+            badgeType: 'badge-primary',
+        },
+    });
 
     useEffect(() => {
         const init = () => {
@@ -140,6 +208,7 @@ function App() {
         <div id='#bootstrap-overrides'>
             <Header title='Notes' version='v0.0.1' />
             <div className={delimiterAfterHeader}></div>
+            <div className='days-button'></div>
             <div className='flex-wrapper'>
                 <div id='days-container' className='flex-container slider'>
                     {notesKeys.map(note => (
@@ -151,6 +220,7 @@ function App() {
                     ))}
                 </div>
             </div>
+            <div className='days-button'></div>
             <div className='note-editor'>
                 <div className='card note-editor-card'>
                     <div className='card-body'>
