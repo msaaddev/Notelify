@@ -312,17 +312,19 @@ function App() {
                 <img src={leftSlide} alt='left-slide' onClick={prevSlide} className='prev-btn' />
             </div>
             <div className='flex-wrapper'>
-                <div className='wrapper-cards' id='days-container'>
-                    <div className='flex-container'>
-                        {notesKeys.map(note => (
-                            <div className='card flex-card slide'>
-                                <CardHeader headInfo={headInfo[note]} />
-                                <CardBody notes={notes[note]} />
-                                <CardFooter />
-                            </div>
-                        ))}
+                <div className='left-white-gradient'></div>
+                    <div className='wrapper-cards' id='days-container'>
+                        <div className='flex-container'>
+                            {notesKeys.map(note => (
+                                <div className='card flex-card slide'>
+                                    <CardHeader headInfo={headInfo[note]} />
+                                    <CardBody notes={notes[note]} />
+                                    <CardFooter />
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                <div className='right-white-gradient'></div>
             </div>
             <div className='days-button'>
                 <img src={right} alt='right' onClick={nextCard} className='next-btn' />

@@ -16,6 +16,8 @@ body {
     transition: 0.5s ease-in-out 0s;
 
     width: 100vw;
+
+    z-index: 3;
 }
 
 .note-editor-card {
@@ -46,6 +48,7 @@ body {
 }
 
 .flex-wrapper {
+    position: relative;
     width: 80vw;
     overflow: hidden;
     width: 80%;
@@ -55,6 +58,31 @@ body {
 .wrapper-cards {
     overflow: hidden;
     scroll-behavior: smooth;
+}
+
+.left-white-gradient, 
+.right-white-gradient {
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    width: 4%;
+    z-index: 2;
+}
+
+.left-white-gradient {
+    left: 0px;
+    background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    /* background-color: blue; */
+}
+
+.right-white-gradient {
+    right: 0px;
+    background: -moz-linear-gradient(right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(right, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to left, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    /* background-color: blue; */
 }
 
 .flex-container {
