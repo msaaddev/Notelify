@@ -20,7 +20,7 @@ import './styles/style.css';
 
 function App() {
     let namespaceGlobal = {
-        lastSelectedDayId: null,
+        lastSelectedDay: null,
         lastTimePicked: null,
     };
 
@@ -165,6 +165,8 @@ function App() {
 
     useEffect(() => {
         const init = () => {
+            
+
             document.querySelectorAll('.add-note').forEach(btn => {
                 btn.addEventListener('click', () => addNote(btn));
             });
@@ -182,9 +184,9 @@ function App() {
         init();
     }, []);
 
-    const addNote = btn => {
+    const addNote = (btn) => {
         let card = btn.closest('.card');
-        namespaceGlobal.lastSelectedDayId = card.id;
+        namespaceGlobal.lastSelectedDay = card.querySelector('h4').innerHTML;
         moveEditorLeft();
     };
 
@@ -222,8 +224,17 @@ function App() {
         li.innerHTML = noteContent;
         li.className = 'list-group-item';
 
-        let card = document.querySelector('#' + namespaceGlobal.lastSelectedDayId);
-        let list = card.querySelector('.list-group');
+        let cards = document.querySelectorAll('.card');
+        let chosen;
+        for (let card of cards) {
+            let monthDay = card.querySelector('h4').innerHTML;
+            if (monthDay === namespaceGlobal.lastSelectedDay) {
+                chosen = card;
+                break;
+            }
+        }
+
+        let list = chosen.querySelector('.list-group');
 
         list.insertBefore(li, list.firstElementChild);
         list.insertBefore(span, list.firstElementChild);

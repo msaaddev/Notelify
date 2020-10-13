@@ -6,9 +6,8 @@
 const createNiceDateForCardHeader = (card, date) => {
     let dateStr = date.getDate().toString();
     let endingToNumber = [ 'th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th' ];
-    let last = date.getDate() % 10;
     let first = Math.floor(date.getDate() / 10);
-    if (first == 1) {
+    if (first === 1) {
         // because 11th and 12th and 13th
         endingToNumber = endingToNumber.fill('th', 0, 10);
     }
