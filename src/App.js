@@ -24,6 +24,41 @@ function App() {
         lastTimePicked: null,
     };
 
+    useEffect(() => {
+        const init = () => {
+            document.querySelectorAll('.add-note').forEach(btn => {
+                btn.addEventListener('click', () => addNote(btn));
+            });
+
+            document.querySelectorAll('.submit-note').forEach(btn => {
+                btn.addEventListener('click', submitNote);
+            });
+
+            document.querySelectorAll('.cancel-note').forEach(btn => {
+                btn.addEventListener('click', moveEditorRight);
+            });
+            initDates();
+        };
+        init();
+        const getData = async () => {
+            let storageNotes = await window.localStorage.getItem('student-notes');
+            let storageHeadInfo = await window.localStorage.getItem('student-headInfo');
+            let storageKeys = await window.localStorage.getItem('student-notes-keys');
+
+            if (storageNotes !== null && storageHeadInfo !== null) {
+                storageNotes = JSON.parse(storageNotes);
+                storageHeadInfo = JSON.parse(storageHeadInfo);
+                storageKeys = JSON.parse(storageKeys);
+
+                setHeadInfo(storageHeadInfo);
+                setNotes(storageNotes);
+                setNotesKeys(storageKeys);
+            }
+        };
+
+        getData();
+    }, []);
+
     const [notes, setNotes] = useState({
         note1: [
             {
@@ -123,7 +158,6 @@ function App() {
             },
         ],
     });
-
     const [headInfo, setHeadInfo] = useState({
         note1: {
             monthDay: '7th October',
@@ -162,37 +196,7 @@ function App() {
             badgeType: 'badge-primary',
         },
     });
-
-    useEffect(() => {
-        const init = () => {
-            document.querySelectorAll('.add-note').forEach(btn => {
-                btn.addEventListener('click', () => addNote(btn));
-            });
-
-            document.querySelectorAll('.submit-note').forEach(btn => {
-                btn.addEventListener('click', submitNote);
-            });
-
-            document.querySelectorAll('.cancel-note').forEach(btn => {
-                btn.addEventListener('click', moveEditorRight);
-            });
-            initDates();
-        };
-        init();
-        let storageNotes = window.localStorage.getItem('student-notes');
-        let storageHeadInfo = window.localStorage.getItem('student-headInfo');
-
-        if (storageNotes !== null && storageHeadInfo !== null) {
-            storageNotes = JSON.parse(storageNotes);
-            storageHeadInfo = JSON.parse(storageHeadInfo);
-
-            setHeadInfo(storageHeadInfo);
-            setNotes(storageNotes);
-            // console.log(storageNotes);
-            // console.log(storageHeadInfo);
-        }
-        
-    }, []);
+    const [notesKeys, setNotesKeys] = useState(Object.keys(notes));
 
     const addNote = btn => {
         let card = btn.closest('.card');
@@ -204,7 +208,7 @@ function App() {
         let span = document.createElement('span');
 
         span.innerHTML = 'Deadline';
-        let classNames = ['badge', 'badge-pill'];        
+        let classNames = ['badge', 'badge-pill'];
         let [deadline, link, time] = ['deadline', 'link', 'time'].map(num =>
             document.querySelector('#badge-' + num)
         );
@@ -229,7 +233,7 @@ function App() {
         let noteContent = document.querySelector('#note-content').value;
 
         let span = createBadgeFromRadioButtons();
-    
+
         let badge = span.className.split(' ')[2];
         console.log(badge);
 
@@ -246,20 +250,21 @@ function App() {
         let chosen;
         for (let card of cards) {
             let monthDay = card.querySelector('h4').innerHTML;
-            
+
             if (monthDay === namespaceGlobal.lastSelectedDay) {
                 chosen = card;
                 console.log(chosen);
                 break;
             }
         }
-        
+
         let list = chosen.querySelector('.list-group');
 
         list.insertBefore(li, list.firstElementChild);
         list.insertBefore(span, list.firstElementChild);
 
         let storage = window.localStorage;
+        storage.setItem('student-notes-keys', JSON.stringify(notesKeys));
         storage.setItem('student-notes', JSON.stringify(notes));
         storage.setItem('student-headInfo', JSON.stringify(headInfo));
 
@@ -293,8 +298,6 @@ function App() {
         }
         namespaceGlobal.lastTimePicked = `${h}:${m}`;
     };
-
-    const [notesKeys] = useState(Object.keys(notes));
 
     const initDates = () => {
         let msInDay = 24 * 60 * 60 * 1000;
@@ -339,17 +342,17 @@ function App() {
             </div>
             <div className='flex-wrapper'>
                 <div className='left-white-gradient'></div>
-                    <div className='wrapper-cards' id='days-container'>
-                        <div className='flex-container'>
-                            {notesKeys.map(note => (
-                                <div className='card flex-card slide'>
-                                    <CardHeader headInfo={headInfo[note]} />
-                                    <CardBody notes={notes[note]} />
-                                    <CardFooter />
-                                </div>
-                            ))}
-                        </div>
+                <div className='wrapper-cards' id='days-container'>
+                    <div className='flex-container'>
+                        {notesKeys.map(note => (
+                            <div className='card flex-card slide'>
+                                <CardHeader headInfo={headInfo[note]} />
+                                <CardBody notes={notes[note]} />
+                                <CardFooter />
+                            </div>
+                        ))}
                     </div>
+                </div>
                 <div className='right-white-gradient'></div>
             </div>
             <div className='days-button'>
