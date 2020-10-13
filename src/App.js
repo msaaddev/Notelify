@@ -180,8 +180,18 @@ function App() {
         };
         init();
         let storageNotes = window.localStorage.getItem('student-notes');
-        storageNotes = JSON.stringify(storageNotes);
-        console.log(storageNotes);
+        let storageHeadInfo = window.localStorage.getItem('student-headInfo');
+
+        if (storageNotes !== null && storageHeadInfo !== null) {
+            storageNotes = JSON.parse(storageNotes);
+            storageHeadInfo = JSON.parse(storageHeadInfo);
+
+            setHeadInfo(storageHeadInfo);
+            setNotes(storageNotes);
+            // console.log(storageNotes);
+            // console.log(storageHeadInfo);
+        }
+        
     }, []);
 
     const addNote = btn => {
@@ -250,8 +260,8 @@ function App() {
         list.insertBefore(span, list.firstElementChild);
 
         let storage = window.localStorage;
-        storage.setItem('student-notes', notes);
-        storage.setItem('student-headInfo', headInfo);
+        storage.setItem('student-notes', JSON.stringify(notes));
+        storage.setItem('student-headInfo', JSON.stringify(headInfo));
 
         moveEditorRight();
     };
