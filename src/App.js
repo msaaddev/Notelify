@@ -176,10 +176,12 @@ function App() {
             document.querySelectorAll('.cancel-note').forEach(btn => {
                 btn.addEventListener('click', moveEditorRight);
             });
-
             initDates();
         };
         init();
+        let storageNotes = window.localStorage.getItem('student-notes');
+        storageNotes = JSON.stringify(storageNotes);
+        console.log(storageNotes);
     }, []);
 
     const addNote = btn => {
@@ -192,7 +194,7 @@ function App() {
         let span = document.createElement('span');
 
         span.innerHTML = 'Deadline';
-        let classNames = ['badge', 'badge-pill'];
+        let classNames = ['badge', 'badge-pill'];        
         let [deadline, link, time] = ['deadline', 'link', 'time'].map(num =>
             document.querySelector('#badge-' + num)
         );
@@ -217,25 +219,39 @@ function App() {
         let noteContent = document.querySelector('#note-content').value;
 
         let span = createBadgeFromRadioButtons();
+    
+        let badge = span.className.split(' ')[2];
+        console.log(badge);
+
+        let text = span.innerHTML;
+        console.log(text);
 
         let li = document.createElement('li');
         li.innerHTML = noteContent;
+        console.log(noteContent);
+
         li.className = 'list-group-item';
 
         let cards = document.querySelectorAll('.card');
         let chosen;
         for (let card of cards) {
             let monthDay = card.querySelector('h4').innerHTML;
+            
             if (monthDay === namespaceGlobal.lastSelectedDay) {
                 chosen = card;
+                console.log(chosen);
                 break;
             }
         }
-
+        
         let list = chosen.querySelector('.list-group');
 
         list.insertBefore(li, list.firstElementChild);
         list.insertBefore(span, list.firstElementChild);
+
+        let storage = window.localStorage;
+        storage.setItem('student-notes', notes);
+        storage.setItem('student-headInfo', headInfo);
 
         moveEditorRight();
     };
