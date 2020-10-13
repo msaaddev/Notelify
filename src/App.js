@@ -165,8 +165,6 @@ function App() {
 
     useEffect(() => {
         const init = () => {
-            
-
             document.querySelectorAll('.add-note').forEach(btn => {
                 btn.addEventListener('click', () => addNote(btn));
             });
@@ -184,7 +182,7 @@ function App() {
         init();
     }, []);
 
-    const addNote = (btn) => {
+    const addNote = btn => {
         let card = btn.closest('.card');
         namespaceGlobal.lastSelectedDay = card.querySelector('h4').innerHTML;
         moveEditorLeft();
@@ -286,22 +284,22 @@ function App() {
     };
 
     const prevCard = () => {
-        const cardId = document.getElementById('slider');
+        const cardId = document.getElementById('days-container');
         cardId.scrollLeft -= 420;
     };
 
     const nextCard = () => {
-        const cardId = document.getElementById('slider');
+        const cardId = document.getElementById('days-container');
         cardId.scrollLeft += 420;
     };
 
     const prevSlide = () => {
-        const cardId = document.getElementById('slider');
+        const cardId = document.getElementById('days-container');
         cardId.scrollLeft -= 1100;
     };
 
     const nextSlide = () => {
-        const cardId = document.getElementById('slider');
+        const cardId = document.getElementById('days-container');
         cardId.scrollLeft += 1100;
     };
 
@@ -313,15 +311,17 @@ function App() {
                 <img src={left} alt='left' onClick={prevCard} className='prev-btn' />
                 <img src={leftSlide} alt='left-slide' onClick={prevSlide} className='prev-btn' />
             </div>
-            <div className='flex-wrapper' id='slider'>
-                <div id='days-container' className='flex-container'>
-                    {notesKeys.map(note => (
-                        <div className='card flex-card slide'>
-                            <CardHeader headInfo={headInfo[note]} />
-                            <CardBody notes={notes[note]} />
-                            <CardFooter />
-                        </div>
-                    ))}
+            <div className='flex-wrapper'>
+                <div className='wrapper-cards' id='days-container'>
+                    <div className='flex-container'>
+                        {notesKeys.map(note => (
+                            <div className='card flex-card slide'>
+                                <CardHeader headInfo={headInfo[note]} />
+                                <CardBody notes={notes[note]} />
+                                <CardFooter />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
             <div className='days-button'>

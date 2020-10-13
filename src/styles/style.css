@@ -47,10 +47,14 @@ body {
 
 .flex-wrapper {
     width: 80vw;
-    scroll-behavior: smooth;
-    width: 80%;
     overflow: hidden;
+    width: 80%;
     height: 80%;
+}
+
+.wrapper-cards {
+    overflow: hidden;
+    scroll-behavior: smooth;
 }
 
 .flex-container {
