@@ -2,28 +2,37 @@ import React, { useState, useEffect } from 'react';
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
+// components
 import Header from './components/Header';
-
 import CardHeader from './components/CardHeader';
 import CardBody from './components/CardBody';
 import CardFooter from './components/CardFooter';
 
-import { createNiceDateForCardHeader } from './TimeUtils.js';
+// utils
+import { createNiceDateForCardHeader } from './utils/TimeUtils.js';
 
+// images
 import left from './images/left.png';
 import leftSlide from './images/left-slide.png';
 import right from './images/right.png';
 import rightSlide from './images/right-slide.png';
 
+// css
 import './App.css';
 import './styles/style.css';
 
 function App() {
+    /*
+     *
+     *
+     * global namespace variables
+     */
     let namespaceGlobal = {
         lastSelectedDay: null,
         lastTimePicked: null,
     };
 
+    // react hook to fire methods or set values before the rendering of the component
     useEffect(() => {
         const init = () => {
             document.querySelectorAll('.add-note').forEach(btn => {
@@ -59,6 +68,7 @@ function App() {
         getData();
     }, []);
 
+    // react hook for state management
     const [notes, setNotes] = useState({
         note1: [
             {
@@ -204,6 +214,11 @@ function App() {
         moveEditorLeft();
     };
 
+    /*
+     *
+     *
+     * radio button for add note
+     */
     const createBadgeFromRadioButtons = () => {
         let span = document.createElement('span');
 
@@ -229,6 +244,11 @@ function App() {
         return span;
     };
 
+    /*
+     *
+     *
+     * submitting the note so it can be renderered on the screen
+     */
     const submitNote = () => {
         let noteContent = document.querySelector('#note-content').value;
 
@@ -272,6 +292,12 @@ function App() {
     };
 
     const delimiterAfterHeader = 'header-delimiter';
+
+    /*
+     *
+     *
+     * moving add note editor to the left of the screen
+     */
     const moveEditorLeft = () => {
         let editor = document.querySelector('.note-editor');
         let offset =
@@ -282,11 +308,21 @@ function App() {
         editor.style.left = '0';
     };
 
+    /*
+     *
+     *
+     * moving add note editor to the right of the screen
+     */
     const moveEditorRight = () => {
         let editor = document.querySelector('.note-editor');
         editor.style.left = '100vw';
     };
 
+    /*
+     *
+     *
+     * setting time
+     */
     const timePickerChange = date => {
         let h = date.getHours();
         let m = date.getMinutes();
@@ -299,6 +335,11 @@ function App() {
         namespaceGlobal.lastTimePicked = `${h}:${m}`;
     };
 
+    /*
+     *
+     *
+     * initializing dates for the cards
+     */
     const initDates = () => {
         let msInDay = 24 * 60 * 60 * 1000;
         let cardTime = Date.now() - msInDay;
@@ -312,21 +353,41 @@ function App() {
         setHeadInfo(tmp);
     };
 
+    /*
+     *
+     *
+     * move to the previous card to the left
+     */
     const prevCard = () => {
         const cardId = document.getElementById('days-container');
         cardId.scrollLeft -= 420;
     };
 
+    /*
+     *
+     *
+     * move to the next card to the right
+     */
     const nextCard = () => {
         const cardId = document.getElementById('days-container');
         cardId.scrollLeft += 420;
     };
 
+    /*
+     *
+     *
+     * move to the previous slide to the left
+     */
     const prevSlide = () => {
         const cardId = document.getElementById('days-container');
         cardId.scrollLeft -= 1100;
     };
 
+    /*
+     *
+     *
+     * move to the next slide to the right
+     */
     const nextSlide = () => {
         const cardId = document.getElementById('days-container');
         cardId.scrollLeft += 1100;
