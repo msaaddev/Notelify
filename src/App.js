@@ -406,10 +406,7 @@ function App() {
                 <div className='wrapper-cards' id='days-container'>
                     <div className='flex-container'>
                         {notesKeys.map(note => (
-                            <div
-                                className='card flex-card'
-                                key={Math.floor(Math.random() * 100000)}
-                            >
+                            <div className='card flex-card slide'>
                                 <CardHeader headInfo={headInfo[note]} />
                                 <CardBody notes={notes[note]} />
                                 <CardFooter />
