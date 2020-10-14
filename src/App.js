@@ -21,18 +21,16 @@ import rightSlide from './images/right-slide.png';
 import './App.css';
 import './styles/style.css';
 
+const namespaceGlobal = {
+    lastSelectedDay: null
+}
+
 function App() {
     /*
      *
      *
      * global namespace variables
      */
-    let namespaceGlobal = {
-        lastTimePicked: null,
-        lastSelectedDay: null
-    };
-    let lastTimePicked = null;
-
     const [selectedDate, setSelectedDate] = useState(new Date());
 
     // react hook to fire methods or set values before the rendering of the component
@@ -43,7 +41,7 @@ function App() {
             });
 
             document.querySelectorAll('.submit-note').forEach(btn => {
-                btn.addEventListener('click', submitNote);
+                btn.addEventListener('click', () => submitNote(namespaceGlobal.lastSelectedDay));
             });
 
             document.querySelectorAll('.cancel-note').forEach(btn => {
@@ -143,7 +141,7 @@ function App() {
     const [notesKeys, setNotesKeys] = useState(Object.keys(notes));
     const [middleCard, setMiddleCard] = useState(2);
 
-    const addNote = btn => {
+    const addNote = (btn) => {
         let card = btn.closest('.card');
         namespaceGlobal.lastSelectedDay = card.querySelector('h4').innerHTML;
         moveEditorLeft();
@@ -201,7 +199,7 @@ function App() {
      *
      * submitting the note so it can be renderered on the screen
      */
-    const submitNote = () => {
+    const submitNote = (lastSelectedDay) => {
         let noteContent = document.querySelector('#note-content').value;
 
         let span = createBadgeFromRadioButtons();
@@ -215,14 +213,14 @@ function App() {
         li.innerHTML = noteContent;
         li.className = 'list-group-item';
 
-        let cards = document.querySelectorAll('.card');
+        let cards = document.querySelectorAll('.flex-container .card');
         let chosen;
         for (let card of cards) {
             let monthDay = card.querySelector('h4').innerHTML;
 
-            if (monthDay === namespaceGlobal.lastSelectedDay) {
+            console.log(monthDay, lastSelectedDay);
+            if (monthDay === lastSelectedDay) {
                 chosen = card;
-                console.log(chosen);
                 break;
             }
         }
@@ -237,8 +235,11 @@ function App() {
 
         const card = `note${chosen.id}`;
         const temp = { ...notes };
-        temp[card].push(noteInfo);
-        console.log(temp[card]);
+        if (temp.hasOwnProperty(card)) {
+            temp[card].push(noteInfo);
+        } else {
+            temp[card] = [noteInfo];
+        }
         setNotes(temp);
 
         // rendering the data on screen again
@@ -327,11 +328,11 @@ function App() {
      *
      * create new card on the  screen
      */
-    const createCard = async () => {
+    const createCard = async (middle) => {
         const numOfNotes = notesKeys.length;
         const noteName = `note${numOfNotes + 1}`;
 
-        const newNoteHead = {
+        let newNoteHead = {
             [noteName]: {
                 monthDay: '7th October',
                 weekDay: 'Wednesday',
@@ -339,6 +340,10 @@ function App() {
                 badgeType: 'badge-primary',
             },
         };
+
+        const msInDay = 24 * 60 * 60 * 1000;
+        const timestampForNewCard = msInDay * (middle - 2) + Date.now()
+        createNiceDateForCardHeader(newNoteHead[noteName], new Date(timestampForNewCard));
 
         const newNote = {
             [noteName]: [
@@ -385,7 +390,12 @@ function App() {
         middle++;
         console.log(middle);
         if (middle <= cards) {
-        } else await createCard();
+        } else {
+          await createCard(middle);
+          const addButtons = document.querySelectorAll('.add-note');
+          const lastBtn = addButtons.item(addButtons.length - 1);
+          lastBtn.addEventListener('click', () => addNote(lastBtn));
+        }
 
         const cardId = document.getElementById('days-container');
         cardId.scrollLeft += 420;

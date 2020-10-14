@@ -22,6 +22,7 @@ const createNiceDateForCardHeader = (card, date) => {
 
     card.monthDay = `${dateStr} ${numberToMonth[date.getMonth()]}`;
     card.weekDay = dayToWeekday[date.getDay()];
+    card.timestamp = date;
 }
 
 
