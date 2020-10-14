@@ -2,6 +2,9 @@
  * Supply a link to the card header and a Date object, and it fills it with words like
  *   11th October
  *   Thursday
+ *
+ * @param {card} - headInfo Object
+ * @param {date} - Current Date
  */
 const createNiceDateForCardHeader = (card, date) => {
     let dateStr = date.getDate().toString();
