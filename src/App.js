@@ -23,8 +23,8 @@ import './styles/style.css';
 
 const namespaceGlobal = {
     lastSelectedDay: null,
-    lastTimePicked: null
-}
+    lastTimePicked: null,
+};
 
 function App() {
     /*
@@ -142,7 +142,7 @@ function App() {
     const [notesKeys, setNotesKeys] = useState(Object.keys(notes));
     const [middleCard, setMiddleCard] = useState(2);
 
-    const addNote = (btn) => {
+    const addNote = btn => {
         let card = btn.closest('.card');
         namespaceGlobal.lastSelectedDay = card.querySelector('h4').innerHTML;
         moveEditorLeft();
@@ -189,7 +189,7 @@ function App() {
      *
      * submitting the note so it can be renderered on the screen
      */
-    const submitNote = (lastSelectedDay) => {
+    const submitNote = lastSelectedDay => {
         let noteContent = document.querySelector('#note-content').value;
 
         let [text, badge] = createBadgeContentFromRadio();
@@ -261,10 +261,10 @@ function App() {
         editor.style.left = '100vw';
     };
 
-    const handleTimeChange = (date) => {
+    const handleTimeChange = date => {
         setSelectedDate(date);
         namespaceGlobal.lastTimePicked = date;
-    }
+    };
 
     // remove key from notes keys state
 
@@ -273,7 +273,7 @@ function App() {
      *
      * format time
      */
-    const formatDateToHHMM = (date) => {
+    const formatDateToHHMM = date => {
         let h = date.getHours();
         let m = date.getMinutes();
         if (h < 10) {
@@ -307,7 +307,7 @@ function App() {
      *
      * create new card on the  screen
      */
-    const createCard = async (middle) => {
+    const createCard = async middle => {
         const numOfNotes = notesKeys.length;
         const noteName = `note${numOfNotes + 1}`;
 
@@ -321,7 +321,7 @@ function App() {
         };
 
         const msInDay = 24 * 60 * 60 * 1000;
-        const timestampForNewCard = msInDay * (middle - 2) + Date.now()
+        const timestampForNewCard = msInDay * (middle - 2) + Date.now();
         createNiceDateForCardHeader(newNoteHead[noteName], new Date(timestampForNewCard));
 
         const newNote = {
@@ -370,10 +370,13 @@ function App() {
         console.log(middle);
         if (middle <= cards) {
         } else {
-          await createCard(middle);
-          const addButtons = document.querySelectorAll('.add-note');
-          const lastBtn = addButtons.item(addButtons.length - 1);
-          lastBtn.addEventListener('click', () => addNote(lastBtn));
+            const width = document.getElementById('changeStyle').offsetWidth;
+            const newWidth = width + 380 + 'px';
+            document.getElementById('changeStyle').style.width = newWidth;
+            await createCard(middle);
+            const addButtons = document.querySelectorAll('.add-note');
+            const lastBtn = addButtons.item(addButtons.length - 1);
+            lastBtn.addEventListener('click', () => addNote(lastBtn));
         }
 
         const cardId = document.getElementById('days-container');
@@ -414,7 +417,7 @@ function App() {
             <div className='flex-wrapper'>
                 <div className='left-white-gradient'></div>
                 <div className='wrapper-cards' id='days-container'>
-                    <div className='flex-container'>
+                    <div className='flex-container' id='changeStyle'>
                         {notesKeys.map(note => (
                             <div className='card flex-card slide' id={notesKeys.indexOf(note) + 1}>
                                 <CardHeader headInfo={headInfo[note]} />
