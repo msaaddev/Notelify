@@ -138,6 +138,7 @@ function App() {
         },
     });
     const [notesKeys, setNotesKeys] = useState(Object.keys(notes));
+    const [middleCard, setMiddleCard] = useState(2);
 
     const addNote = btn => {
         let card = btn.closest('.card');
@@ -311,12 +312,50 @@ function App() {
         setHeadInfo(tmp);
     };
 
+    /**
+     *
+     * create new card on the  screen
+     */
+    const createCard = async () => {
+        const numOfNotes = notesKeys.length;
+        const noteName = `note${numOfNotes + 1}`;
+
+        const newNoteHead = {
+            [noteName]: {
+                monthDay: '7th October',
+                weekDay: 'Wednesday',
+                relativeDay: 'Later',
+                badgeType: 'badge-primary',
+            },
+        };
+
+        const newNote = {
+            [noteName]: [
+                {
+                    badgeType: '',
+                    badgeContent: '',
+                    noteContent: '',
+                },
+            ],
+        };
+
+        const tempNoteHead = { ...headInfo, ...newNoteHead };
+        const tempNote = { ...notes, ...newNote };
+        const tempKey = [...notesKeys, noteName];
+        setNotes(tempNote);
+        setHeadInfo(tempNoteHead);
+        setNotesKeys(tempKey);
+    };
+
     /*
      *
      *
      * move to the previous card to the left
      */
     const prevCard = () => {
+        let middle = middleCard;
+        middle--;
+        setMiddleCard(middle);
         const cardId = document.getElementById('days-container');
         cardId.scrollLeft -= 420;
     };
@@ -326,7 +365,17 @@ function App() {
      *
      * move to the next card to the right
      */
-    const nextCard = () => {
+    const nextCard = async () => {
+        let middle = middleCard;
+        middle++;
+        setMiddleCard(middle);
+
+        let cards = notesKeys.length;
+        middle++;
+        console.log(middle);
+        if (middle <= cards) {
+        } else await createCard();
+
         const cardId = document.getElementById('days-container');
         cardId.scrollLeft += 420;
     };
@@ -337,6 +386,9 @@ function App() {
      * move to the previous slide to the left
      */
     const prevSlide = () => {
+        let middle = middleCard;
+        middle -= 2;
+        setMiddleCard(middle);
         const cardId = document.getElementById('days-container');
         cardId.scrollLeft -= 1100;
     };
