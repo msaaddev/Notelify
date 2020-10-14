@@ -218,21 +218,31 @@ function App() {
 
         const card = `note${chosen.id}`;
         const temp = { ...notes };
-        if (temp.hasOwnProperty(card)) {
+        console.log('id ' + card); // note4
+        console.log(temp); // {note1: [], note2: [], note3: [], note4: []}
+        console.log(temp[card]); // undefined
+        console.log(Array.isArray(temp[card]))
+        if (Array.isArray(temp[card])) {
             temp[card].push(noteInfo);
+            console.log('adding');
         } else {
+            console.log('replacing');
             temp[card] = [noteInfo];
         }
         setNotes(temp);
 
         // rendering the data on screen again
 
-        let list = chosen.querySelector('.list-group');
-
         storingDataInLocalStorage();
 
         moveEditorRight();
+
+        hangDeleteHandlerOnNote(chosen.id);
     };
+
+    const hangDeleteHandlerOnNote = (cardId) => {
+        // document.querySelector('
+    }
 
     const delimiterAfterHeader = 'header-delimiter';
 
@@ -325,13 +335,7 @@ function App() {
         createNiceDateForCardHeader(newNoteHead[noteName], new Date(timestampForNewCard));
 
         const newNote = {
-            [noteName]: [
-                {
-                    badgeType: '',
-                    badgeContent: '',
-                    noteContent: '',
-                },
-            ],
+            [noteName]: [],
         };
 
         const tempNoteHead = { ...headInfo, ...newNoteHead };
