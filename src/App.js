@@ -153,29 +153,18 @@ function App() {
      *
      * radio button for add note
      */
-    const createBadgeFromRadioButtons = () => {
-        let span = document.createElement('span');
-
-        span.innerHTML = 'Deadline';
-        let classNames = ['badge', 'badge-pill'];
+    const createBadgeContentFromRadio = () => {
         let [deadline, link, time] = ['deadline', 'link', 'time'].map(num =>
             document.querySelector('#badge-' + num)
         );
 
         if (deadline.checked) {
-            span.innerHTML = 'Deadline';
-            classNames.push('badge-warning');
+            return ['Deadline', 'badge-warning'];
         } else if (link.checked) {
-            span.innerHTML = 'Link or reference';
-            classNames.push('badge-info');
+            return ['Link or reference', 'badge-info'];
         } else {
-            // time.checked
-            span.innerHTML = formatDateToHHMM(namespaceGlobal.lastTimePicked);
-            classNames.push('badge-light');
+            return [formatDateToHHMM(selectedDate), 'badge-light'];
         }
-
-        span.className = classNames.join(' ');
-        return span;
     };
 
     /**
@@ -203,16 +192,9 @@ function App() {
     const submitNote = (lastSelectedDay) => {
         let noteContent = document.querySelector('#note-content').value;
 
-        let span = createBadgeFromRadioButtons();
-
-        let badge = span.className.split(' ')[2];
-        let text = span.innerHTML;
+        let [text, badge] = createBadgeContentFromRadio();
 
         // rendering the data on screen
-
-        let li = document.createElement('li');
-        li.innerHTML = noteContent;
-        li.className = 'list-group-item';
 
         let cards = document.querySelectorAll('.flex-container .card');
         let chosen;
@@ -246,9 +228,6 @@ function App() {
         // rendering the data on screen again
 
         let list = chosen.querySelector('.list-group');
-
-        list.insertBefore(li, list.firstElementChild);
-        list.insertBefore(span, list.firstElementChild);
 
         storingDataInLocalStorage();
 
