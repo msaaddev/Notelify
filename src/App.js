@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
 // components
@@ -28,9 +28,12 @@ function App() {
      * global namespace variables
      */
     let namespaceGlobal = {
-        lastSelectedDay: null,
         lastTimePicked: null,
+        lastSelectedDay: null
     };
+    let lastTimePicked = null;
+
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
     // react hook to fire methods or set values before the rendering of the component
     useEffect(() => {
@@ -167,7 +170,7 @@ function App() {
             classNames.push('badge-info');
         } else {
             // time.checked
-            span.innerHTML = namespaceGlobal.lastTimePicked;
+            span.innerHTML = formatDateToHHMM(selectedDate);
             classNames.push('badge-light');
         }
 
@@ -276,12 +279,20 @@ function App() {
         editor.style.left = '100vw';
     };
 
+    const handleTimeChange = (date) => {
+        console.log('this happens');
+        setSelectedDate(date);
+        console.log(selectedDate); 
+    }
+
+    // remove key from notes keys state
+
     /*
      *
      *
-     * setting time
+     * format time
      */
-    const timePickerChange = date => {
+    const formatDateToHHMM = (date) => {
         let h = date.getHours();
         let m = date.getMinutes();
         if (h < 10) {
@@ -290,7 +301,7 @@ function App() {
         if (m < 10) {
             m = '0' + m;
         }
-        namespaceGlobal.lastTimePicked = `${h}:${m}`;
+        return `${h}:${m}`;
     };
 
     /*
@@ -432,7 +443,7 @@ function App() {
                                 <span className='badge badge-pill badge-light'>Time</span>
                             </label>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <KeyboardTimePicker onChange={e => timePickerChange(e)} />
+                                <TimePicker value={selectedDate} onChange={handleTimeChange} />
                             </MuiPickersUtilsProvider>
                         </div>
 
