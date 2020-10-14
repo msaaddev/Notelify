@@ -22,7 +22,8 @@ import './App.css';
 import './styles/style.css';
 
 const namespaceGlobal = {
-    lastSelectedDay: null
+    lastSelectedDay: null,
+    lastTimePicked: null
 }
 
 function App() {
@@ -169,7 +170,7 @@ function App() {
             classNames.push('badge-info');
         } else {
             // time.checked
-            span.innerHTML = formatDateToHHMM(selectedDate);
+            span.innerHTML = formatDateToHHMM(namespaceGlobal.lastTimePicked);
             classNames.push('badge-light');
         }
 
@@ -282,9 +283,8 @@ function App() {
     };
 
     const handleTimeChange = (date) => {
-        console.log('this happens');
         setSelectedDate(date);
-        console.log(selectedDate); 
+        namespaceGlobal.lastTimePicked = date;
     }
 
     // remove key from notes keys state
