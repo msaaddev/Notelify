@@ -116,57 +116,6 @@ function App() {
                 noteContent: 'Introduction to Algorithms, CLRS',
             },
         ],
-        note4: [
-            {
-                badgeType: 'badge-warning',
-                badgeContent: 'Deadline',
-                noteContent: 'Economics homework',
-            },
-            {
-                badgeType: 'badge-light',
-                badgeContent: '18-00',
-                noteContent: 'Call my team to discuss project',
-            },
-            {
-                badgeType: 'badge-info',
-                badgeContent: 'Links or references',
-                noteContent: 'Introduction to Algorithms, CLRS',
-            },
-        ],
-        note5: [
-            {
-                badgeType: 'badge-warning',
-                badgeContent: 'Deadline',
-                noteContent: 'Economics homework',
-            },
-            {
-                badgeType: 'badge-light',
-                badgeContent: '18-00',
-                noteContent: 'Call my team to discuss project',
-            },
-            {
-                badgeType: 'badge-info',
-                badgeContent: 'Links or references',
-                noteContent: 'Introduction to Algorithms, CLRS',
-            },
-        ],
-        note6: [
-            {
-                badgeType: 'badge-warning',
-                badgeContent: 'Deadline',
-                noteContent: 'Economics homework',
-            },
-            {
-                badgeType: 'badge-light',
-                badgeContent: '18-00',
-                noteContent: 'Call my team to discuss project',
-            },
-            {
-                badgeType: 'badge-info',
-                badgeContent: 'Links or references',
-                noteContent: 'Introduction to Algorithms, CLRS',
-            },
-        ],
     });
     const [headInfo, setHeadInfo] = useState({
         note1: {
@@ -182,24 +131,6 @@ function App() {
             badgeType: 'badge-warning',
         },
         note3: {
-            monthDay: '9th October',
-            weekDay: 'Friday',
-            relativeDay: 'Tomorrow',
-            badgeType: 'badge-primary',
-        },
-        note4: {
-            monthDay: '9th October',
-            weekDay: 'Friday',
-            relativeDay: 'Tomorrow',
-            badgeType: 'badge-primary',
-        },
-        note5: {
-            monthDay: '9th October',
-            weekDay: 'Friday',
-            relativeDay: 'Tomorrow',
-            badgeType: 'badge-primary',
-        },
-        note6: {
             monthDay: '9th October',
             weekDay: 'Friday',
             relativeDay: 'Tomorrow',
@@ -244,6 +175,23 @@ function App() {
         return span;
     };
 
+    /**
+     *
+     * storing all the notes data in the browser local storage
+     */
+    const storingDataInLocalStorage = () => {
+        let storage = window.localStorage;
+
+        if (storage.getItem('student-notes-keys') !== null) {
+            storage.removeItem('student-notes-keys');
+            storage.removeItem('student-notes');
+            storage.removeItem('student-headInfo');
+        }
+        storage.setItem('student-notes-keys', JSON.stringify(notesKeys));
+        storage.setItem('student-notes', JSON.stringify(notes));
+        storage.setItem('student-headInfo', JSON.stringify(headInfo));
+    };
+
     /*
      *
      *
@@ -255,15 +203,12 @@ function App() {
         let span = createBadgeFromRadioButtons();
 
         let badge = span.className.split(' ')[2];
-        console.log(badge);
-
         let text = span.innerHTML;
-        console.log(text);
+
+        // rendering the data on screen
 
         let li = document.createElement('li');
         li.innerHTML = noteContent;
-        console.log(noteContent);
-
         li.className = 'list-group-item';
 
         let cards = document.querySelectorAll('.card');
@@ -278,15 +223,28 @@ function App() {
             }
         }
 
+        // updating state
+
+        const noteInfo = {
+            badgeType: `${badge}`,
+            badgeContent: `${text}`,
+            noteContent: `${noteContent}`,
+        };
+
+        const card = `note${chosen.id}`;
+        const temp = { ...notes };
+        temp[card].push(noteInfo);
+        console.log(temp[card]);
+        setNotes(temp);
+
+        // rendering the data on screen again
+
         let list = chosen.querySelector('.list-group');
 
         list.insertBefore(li, list.firstElementChild);
         list.insertBefore(span, list.firstElementChild);
 
-        let storage = window.localStorage;
-        storage.setItem('student-notes-keys', JSON.stringify(notesKeys));
-        storage.setItem('student-notes', JSON.stringify(notes));
-        storage.setItem('student-headInfo', JSON.stringify(headInfo));
+        storingDataInLocalStorage();
 
         moveEditorRight();
     };
@@ -406,7 +364,7 @@ function App() {
                 <div className='wrapper-cards' id='days-container'>
                     <div className='flex-container'>
                         {notesKeys.map(note => (
-                            <div className='card flex-card slide'>
+                            <div className='card flex-card slide' id={notesKeys.indexOf(note) + 1}>
                                 <CardHeader headInfo={headInfo[note]} />
                                 <CardBody notes={notes[note]} />
                                 <CardFooter />
