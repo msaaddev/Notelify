@@ -24,6 +24,8 @@ import './styles/style.css';
 const namespaceGlobal = {
     lastSelectedDay: null,
     lastTimePicked: null,
+    notesDublicate: null,
+    headInfoDublicates: null
 };
 
 function App() {
@@ -33,6 +35,24 @@ function App() {
      * global namespace variables
      */
     const [selectedDate, setSelectedDate] = useState(new Date());
+
+    const customSetNotes = (notes) => {
+        setNotes(notes);
+        namespaceGlobal.notesDublicate = notes;
+    }
+
+    const customGetNotes = () => {
+        return {...namespaceGlobal.notesDublicate};
+    }
+
+    const customSetHeadInfo = (info) => {
+        setHeadInfo(info);
+        namespaceGlobal.headInfoDublicates = info;
+    }
+
+    const customGetHeadInfo = () => {
+        return {...namespaceGlobal.headInfoDublicates};
+    }
 
     // react hook to fire methods or set values before the rendering of the component
     useEffect(() => {
@@ -48,6 +68,11 @@ function App() {
             document.querySelectorAll('.cancel-note').forEach(btn => {
                 btn.addEventListener('click', moveEditorRight);
             });
+
+
+            namespaceGlobal.notesDublicate = notes;
+            namespaceGlobal.headInfoDublicates = headInfo;
+
             initDates();
         };
         init();
@@ -61,8 +86,8 @@ function App() {
                 storageHeadInfo = JSON.parse(storageHeadInfo);
                 storageKeys = JSON.parse(storageKeys);
 
-                setHeadInfo(storageHeadInfo);
-                setNotes(storageNotes);
+                customSetHeadInfo(storageHeadInfo);
+                customSetNotes(storageNotes);
                 setNotesKeys(storageKeys);
             }
         };
@@ -142,6 +167,7 @@ function App() {
     const [notesKeys, setNotesKeys] = useState(Object.keys(notes));
     const [middleCard, setMiddleCard] = useState(2);
 
+
     const addNote = btn => {
         let card = btn.closest('.card');
         namespaceGlobal.lastSelectedDay = card.querySelector('h4').innerHTML;
@@ -179,6 +205,7 @@ function App() {
             storage.removeItem('student-notes');
             storage.removeItem('student-headInfo');
         }
+
         storage.setItem('student-notes-keys', JSON.stringify(notesKeys));
         storage.setItem('student-notes', JSON.stringify(notes));
         storage.setItem('student-headInfo', JSON.stringify(headInfo));
@@ -217,19 +244,13 @@ function App() {
         };
 
         const card = `note${chosen.id}`;
-        const temp = { ...notes };
+        const temp = customGetNotes();
         console.log('id ' + card); // note4
         console.log(temp); // {note1: [], note2: [], note3: [], note4: []}
         console.log(temp[card]); // undefined
         console.log(Array.isArray(temp[card]))
-        if (Array.isArray(temp[card])) {
-            temp[card].push(noteInfo);
-            console.log('adding');
-        } else {
-            console.log('replacing');
-            temp[card] = [noteInfo];
-        }
-        setNotes(temp);
+        temp[card].push(noteInfo);
+        customSetNotes(temp);
 
         // rendering the data on screen again
 
@@ -237,11 +258,40 @@ function App() {
 
         moveEditorRight();
 
-        hangDeleteHandlerOnNote(chosen.id);
+        rehangDeleters();
     };
 
-    const hangDeleteHandlerOnNote = (cardId) => {
-        // document.querySelector('
+    const deleteHandler = (cardId, note) => {
+        let cardName = 'note' + cardId;
+        let tmp = customGetNotes();
+        let card = tmp[cardName];
+        for (let i = 0; i < card.length; i++) {
+            let curNote = card[i];
+            console.log(card, cardId, cardName, curNote);
+            if (curNote.badgeType == note.badgeType &&
+                curNote.badgeContent == note.badgeContent &&
+                curNote.noteContent == note.noteContent) {
+               card.splice(i, 1);
+                break;
+            }
+        }
+        customSetNotes(tmp);
+    }
+
+    const rehangDeleters = () => {
+        let cards = document.querySelectorAll('.flex-container .card');
+        let cardId = 0;
+        cards.forEach(card => {
+            cardId++;
+            const localCardId = cardId;
+            let btnId = 0;
+            let btns = card.querySelectorAll('.delete-button');
+            btns.forEach(btn => {
+                btnId++;
+                const localBtnId = btnId;
+                btn.addEventListener('click', () => deleteHandler(localCardId, customGetHeadInfo()['note' + localBtnId]));
+            });
+        });
     }
 
     const delimiterAfterHeader = 'header-delimiter';
@@ -304,13 +354,13 @@ function App() {
         let msInDay = 24 * 60 * 60 * 1000;
         let cardTime = Date.now() - msInDay;
 
-        let tmp = { ...headInfo };
+        let tmp = { ...customGetHeadInfo() };
         for (let note of notesKeys) {
             let cardDate = new Date(cardTime);
             createNiceDateForCardHeader(tmp[note], cardDate);
             cardTime += msInDay;
         }
-        setHeadInfo(tmp);
+        customSetHeadInfo(tmp);
     };
 
     /**
@@ -338,11 +388,12 @@ function App() {
             [noteName]: [],
         };
 
-        const tempNoteHead = { ...headInfo, ...newNoteHead };
-        const tempNote = { ...notes, ...newNote };
+        const tempNoteHead = { ...customGetHeadInfo(), ...newNoteHead };
+        const realNotes = customGetNotes();
+        const tempNote = { ...realNotes, ...newNote };
         const tempKey = [...notesKeys, noteName];
-        setNotes(tempNote);
-        setHeadInfo(tempNoteHead);
+        customSetNotes(tempNote);
+        customSetHeadInfo(tempNoteHead);
         setNotesKeys(tempKey);
     };
 

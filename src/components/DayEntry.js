@@ -1,4 +1,5 @@
 import React from 'react';
+import cross from '../images/cross.png';
 
 const DayEntry = ({ badgeType, badgeContent, noteContent }) => {
     let badgeClasses = 'badge badge-pill ' + badgeType + ' delete-holder';
@@ -6,7 +7,9 @@ const DayEntry = ({ badgeType, badgeContent, noteContent }) => {
         <>
             <span className={badgeClasses}>
                 {badgeContent}
-                <div className='delete-button'></div>
+                <div className='delete-button'>
+                    <img src={cross}/>
+                </div>
             </span>
             <li className='list-group-item'>{noteContent}</li>
         </>

@@ -163,6 +163,8 @@ body {
     
     height: 20px;
     width: 20px;
+}
 
-    background-color: black;
+.delete-button img {
+    width: 20px;
 }
