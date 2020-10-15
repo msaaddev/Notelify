@@ -13,7 +13,7 @@ To be put in simpler words, Notelify will help you do stuff that is ***really***
 
 ## 💥 Demo
 
-![Notelify Demo](https://p21.tr4.n0.cdn.getcloudapp.com/items/kpuw7qBN/Screen%20Recording%202020-10-15%20at%2002.42.45%20PM.gif?source=viewer&v=e09f99d793bfa785b3c5b6398a4f4bbd)
+![Notelify Demo](./images/demo.gif)
 
 ## 💻 Local Development
 
