@@ -1,0 +1,8 @@
+.jumbotron {
+	background-color: #fad000 !important;
+}
+
+.jumbotron h1 span {
+    color: #6c757d;
+	background-color: #ffffff;
+}

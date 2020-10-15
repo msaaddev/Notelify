@@ -412,7 +412,7 @@ function App() {
 
     return (
         <div id='#bootstrap-overrides'>
-            <Header title='Notes' version='v0.1.1' />
+            <Header title='Notelify' version='v0.1.1' />
             <div className={delimiterAfterHeader}></div>
             <div className='days-button'>
                 <img src={left} alt='left' onClick={prevCard} className='prev-btn' />
