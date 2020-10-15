@@ -263,14 +263,20 @@ function App() {
 
     const deleteHandler = (cardId, note) => {
         let cardName = 'note' + cardId;
-        let tmp = customGetNotes();
+        let tmp = {...customGetNotes()}; // redundant ??
         let card = tmp[cardName];
         for (let i = 0; i < card.length; i++) {
             let curNote = card[i];
-            console.log(card, cardId, cardName, curNote);
+            // console.log(card, cardId, cardName, curNote);
+            console.log('supposed to delete')
+            console.log(note);
+            console.log('meeting');
+            console.log(curNote)
+            console.log(note, curNote);
             if (curNote.badgeType == note.badgeType &&
                 curNote.badgeContent == note.badgeContent &&
                 curNote.noteContent == note.noteContent) {
+                console.log('splicing');
                card.splice(i, 1);
                 break;
             }
@@ -289,7 +295,8 @@ function App() {
             btns.forEach(btn => {
                 btnId++;
                 const localBtnId = btnId;
-                btn.addEventListener('click', () => deleteHandler(localCardId, customGetHeadInfo()['note' + localBtnId]));
+                const supposed = customGetNotes()['note' + localCardId][localBtnId - 1];
+                btn.addEventListener('click', () => deleteHandler(localCardId, supposed));
             });
         });
     }
