@@ -48,6 +48,7 @@ function App() {
             document.querySelectorAll('.cancel-note').forEach(btn => {
                 btn.addEventListener('click', moveEditorRight);
             });
+
             initDates();
         };
         init();
@@ -217,7 +218,7 @@ function App() {
         };
 
         const card = `note${chosen.id}`;
-        const temp = { ...notes };
+        const temp = {...notes}
         console.log('id ' + card); // note4
         console.log(temp); // {note1: [], note2: [], note3: [], note4: []}
         console.log(temp[card]); // undefined
@@ -237,11 +238,36 @@ function App() {
 
         moveEditorRight();
 
-        hangDeleteHandlerOnNote(chosen.id);
+        hangDeleteHandlerOnNote(chosen.id, noteInfo);
     };
 
-    const hangDeleteHandlerOnNote = (cardId) => {
-        // document.querySelector('
+    const getDeleteHandler = (cardId, note) => {
+        return () => {
+            let cardName = 'note' + cardId;
+            let tmp = {...notes};
+            let card = tmp[cardName];
+            for (let i = 0; i < card.length; i++) {
+                let curNote = card[i];
+                if (curNote.badgeType == note.badgeType &&
+                    curNote.badgeContent == note.badgeContent &&
+                    curNote.noteContent == note.noteContent) {
+                    card.splice(i, 1);
+                    break;
+                }
+            }
+            setNotes(tmp);
+        }
+    }
+
+    const hangDeleteHandlerOnNote = (cardId, note) => {
+        const cards = document.querySelectorAll('.flex-container .card');
+        for (let card of cards) {
+            if (cardId == card.id) {
+                const notes = card.querySelectorAll('.delete-holder');
+                const last = notes.item(notes.length - 1);
+                last.addEventListener('click', getDeleteHandler(cardId, note));
+            }
+        }
     }
 
     const delimiterAfterHeader = 'header-delimiter';
